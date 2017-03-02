@@ -10,7 +10,7 @@
 \usepackage{csquotes}
 \usepackage[backend=bibtex8,natbib=true,style=authoryear,labelnumber]{biblatex}
 \addbibresource{NET.bib}
-\addbibresource{/home/romansandler/Documents/Thesis/biblio.bib}
+\addbibresource{biblio.bib}
 \DeclareFieldFormat{labelnumberwidth}{[#1]}
 \defbibenvironment{bibliography}  % from numeric.bbx
   {\list
@@ -37,10 +37,10 @@
 
 \usepackage{epsf}           %for .EPS graphics inclusion
 \usepackage{graphicx}
-\usepackage[outdir=./home/romansandler/Documents/NET/figures/]{epstopdf}
+\usepackage[outdir=../figures/]{epstopdf}
 
 \usepackage[font={small,it}]{caption}   %for image captions
-\graphicspath{{/home/romansandler/Documents/NET/figures/}}
+\graphicspath{{../figures/}}
 \RequirePackage{amsopn}
 %\RequirePackage{affronts}
 \RequirePackage{amsmath}
@@ -666,7 +666,7 @@ All that needs to be done is to improve the software.
 This work was supported by NIH grant P41-EB001978 to the Biomedical Simulations Resource at the University of Southern California and DARPA contracts N6601-14-C-4016 and N66601-09-C-2081.  The authors thank Dr. Daniel E. Couture, and Dr. Gautam Popli, Wake Forest Baptist Medical Center for their contribution of human hippocampal neural recordings.
 
 %\bibliographystyle{plainnat} %
-%\bibliography{C:/Users/Administrator/Documents/Thesis/THESIS_Latex/biblio,net}
+%\bibliography{biblio,net}
 
 \printbibliography[heading=bibintoc]
 
