@@ -1,0 +1,113 @@
+\documentclass[11pt,a4paper,final]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{bm}             %for bold math symbols
+\usepackage{latexsym}
+\usepackage{amssymb}
+%\usepackage[]{natbib}
+
+\usepackage{csquotes}
+\usepackage[backend=bibtex8,natbib=true,style=authoryear,labelnumber]{biblatex}
+\addbibresource{NET.bib}
+\addbibresource{C:/Users/Roman/Documents/Thesis/THESIS_Latex/biblio.bib}
+\DeclareFieldFormat{labelnumberwidth}{[#1]}
+\defbibenvironment{bibliography}  % from numeric.bbx
+  {\list
+    {\printtext[labelnumberwidth]{%
+      \printfield{prefixnumber}%
+      \printfield{labelnumber}}}
+    {\setlength{\labelwidth}{\labelnumberwidth}%
+        \setlength{\leftmargin}{\labelwidth}%
+        \setlength{\labelsep}{\biblabelsep}%
+        \addtolength{\leftmargin}{\labelsep}%
+        \setlength{\itemsep}{\bibitemsep}%
+        \setlength{\parsep}{\bibparsep}}%
+        \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+\DefineBibliographyStrings{english}{%
+  bibliography = {References},
+}
+
+\usepackage[font={small,it}]{caption}   %for image captions
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}       %for linking in contents, refs, & images
+\usepackage{authblk}
+
+\usepackage{epsf}           %for .EPS graphics inclusion
+\usepackage{graphicx}
+\usepackage{epstopdf}
+
+\usepackage[font={small,it}]{caption}   %for image captions
+\graphicspath{{C:/Users/Roman/Documents/NET/figures/}}
+\RequirePackage{amsopn}
+%\RequirePackage{affronts}
+\RequirePackage{amsmath}
+\usepackage{lineno}
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} %Set the abstract itself to small italic text
+
+\title{\vspace{-30mm}\fontsize{14pt}{1pt}\textbf{
+Designing Patient-Specific Optimal Neurostimulation Patterns for Seizure Suppression Using Human Hippocampal Data}} % Article title
+
+\author[1,2]{Roman A. Sandler     \thanks{Corresponding Author: rsandler00@gmail.com}}
+\author[3]{Kunling Geng         }   %   kgeng@usc.edu
+\author[3]{Dong Song            }   %   dsong@usc.edu
+\author[4]{Robert E. Hampson    }   %   rhampson@wakehealth.edu
+\author[5]{Mark R. Witcher      }   %   mark.russell.witcher@emory.edu
+\author[4]{Sam A. Deadwyler     }   %   sdeadwyl@wakehealth.edu
+\author[3]{Theodore W. Berger   }   %   berger@usc.edu
+\author[3]{Vasilis Z. Marmarelis}   %   vzm@usc.edu
+\affil[1]{Department of Physics \& Astronomy, University of California, Los Angeles, Los Angeles, CA, USA}
+\affil[2]{W. M. Keck Center for Neurophysics, University of California, Los Angeles, Los Angeles, CA, USA}
+\affil[3]{Department of Biomedical Engineering, University of Southern California, Los Angeles, CA, USA}
+\affil[4]{Department of Physiology \& Pharmacology, Wake Forest University, Winston-Salem, NC, USA} %27106
+\affil[5]{Department of Neurosurgery, Wake Forest University, Winston-Salem, NC, USA}
+\renewcommand\Authands{ \& }
+
+%\linenumbers
+\begin{document}
+
+\newcommand{\nn}{24}    %total amount of neurons
+\newcommand{\fit}{170}    %optimal FIT freq
+\newcommand{\rit}{130}    %optimal RIT freq
+\newcommand{\len}{250}   %length of applied DBS in ms
+\newcommand{\success}{92} % % of seizures abated by optimal stim
+
+\newcommand{\sig}{18}   % # of significnat models
+\newcommand{\sparse}{22.83} % % of significnat connections
+
+%\keywords{epilepsy, DBS, neurostimulation, seizure, graph theory, hippocampus, GLM}
+%\reviewers{Uri T Eden, tzvi@bu.edu Theoden Netoff tnetoff@umn.edu  Wilson Truccolo Wilson_Truccolo@brown.edu Fabrice Wendling  fabrice.wendling@univ-rennes1.fr}
+
+
+\maketitle % Insert title
+
+\begin{abstract}
+Neurostimulation is a promising therapy for abating epileptic seizures.
+However, it is extremely difficult to identify optimal stimulation patterns experimentally.
+In this study we use nonlinear statistical modeling to reconstruct the unique connectivity and interneuronal dynamics of \nn{} neurons recorded from a human hippocampus.
+Spontaneous seizure-like activity is induced \textit{in-silico} in the reconstructed neuronal network.
+This network is then used as a testbed to design and validate a wide range of neurostimulation patterns.
+It was found that the commonly used synchronized periodic trains were not able to permanently abate seizures at any frequency.
+A simulated annealing global optimization algorithm was then used to identify an optimal stimulation pattern which successfully abated \success{}\% of seizures.
+Finally, in a fully responsive, or "closed-loop" neurostimulation paradigm, the optimal stimulation successfully prevented the network from entering the seizure state.
+We propose that the framework presented here for algorithmically identifying patient-specific neurostimulation patterns can greatly increase the efficacy of neurostimulation devices for seizures.
+\end{abstract}
+
+
+\section*{Significance Statement}
+Responsive Neurostimulation devices are quickly becoming a popular method for treating intractable epilepsy.
+Nonetheless, such devices have a large nonresponder rate and only diminish seizure rate rather than completely abolish them.
+A major technological limitation of these devices is that due to the huge parameter space and lack of immediate feedback, it is extremely difficult to identify optimal stimulation parameters such as stimulus pattern and frequency.
+The following work uses recorded human hippocampal data to develop an in-silico testbed for identifying these parameters in a patient specific manner.
+The presented machine learning algorithms used for model estimation and stimulation design are both original and innovative. 
+Implementing such algorithms in responsive neurostimulation devices may greatly increase their efficacy and thus these results constitute a significant advance in the design of neurostimulation to abate seizures.
+Furthermore, the nature of the estimated epileptic network and the obtained optimal neurostimulation patterns presents much insight into the workings of seizure initiation and spread. 
+The considerations make this research ideally suited for publication in PLOS Computational Biology. 
+
+
+
+\end{document} 

@@ -1,0 +1,487 @@
+
+    %GRAPH THEORY / GRANGER CAUSALITY
+@article{sporns09,      notes={graph theory in neuro review},
+  title={Complex brain networks: graph theoretical analysis of structural and functional systems},
+  author={Bullmore, Ed and Sporns, Olaf},
+  journal={Nature Reviews Neuroscience},
+  volume={10},
+  number={3},
+  pages={186--198},
+  year={2009},
+  publisher={Nature Publishing Group}
+}
+@article{shoham10,      notes={granger causality for spiketrains},
+  title={Multivariate autoregressive modeling and granger causality analysis of multiple spike trains},
+  author={Krumin, Michael and Shoham, Shy},
+  journal={Computational intelligence and neuroscience},
+  volume={2010},
+  pages={10},
+  year={2010},
+  publisher={Hindawi Publishing Corp.}
+}
+@article{sasaki07,      notes={metastability in CA3 in-vitro},
+  title={Metastability of active CA3 networks},
+  author={Sasaki, Takuya and Matsuki, Norio and Ikegaya, Yuji},
+  journal={The Journal of Neuroscience},
+  volume={27},
+  number={3},
+  pages={517--528},
+  year={2007},
+  publisher={Soc Neuroscience}
+}
+@article{santaniello14, notes={lustering and graph theory in ECoG},
+  title={Network dynamics of the brain and influence of the epileptic seizure onset zone},
+  author={Burns, Samuel P and Santaniello, Sabato and Yaffe, Robert B and Jouny, Christophe C and Crone, Nathan E and Bergey, Gregory K and Anderson, William S and Sarma, Sridevi V},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={111},
+  number={49},
+  pages={E5321--E5330},
+  year={2014},
+  publisher={National Acad Sciences},
+  notes={Method: 1. Used ECoG recordings from 12 patients to construct connectivity matrix & state clustering analysis
+				a. connectivity measured by using coherence within a variable frequency band (chose band by using r-spectrum & getting band w/ highest average modulation during seizure)
+				b.  then used EVC (eigenvector centrality - ie the leading eVect of adjacency matrix) as features for clustering analysis
+				c. used k-means for clustering  (see fig3,4)
+			2. compared graph nodes w/ clinically labeled focus to see how graph theory can be used to predict where focus is
+				a. uses AUC on EVC to see which electrodes corr. to seixzure focus (see fig8). Also does bootstrap tests on this...
+	Results:1. Showed that IF (isolated electrodes) most corr. w/ clinical focus (clinF) at beginning of seizure, while CF (most central nodes) most corr. w/ clinF at end of seizure!!!!		(see fig5 & 6a,b)
+				-this means that focus starts out super isolated & then synchronizes w/ rest of the brain - this goes nicely w/ Truccolo,2011 results
+				-shows that the fact that IF & CF analysis correlated w/ clinF could be used as post-hoc biomarker on whether the resection surgery will be successful! (fig8)
+	Discussion: 1. suggests that finite states of seizure (4-5 interictal & 8-11 ictal) could be used to model this as an HMM}
+}
+@article{fallani14,     notes={graph theory 4 neuroscience review},
+  title={Graph analysis of functional brain networks: practical issues in translational neuroscience},
+  author={Fallani, Fabrizio De Vico and Richiardi, Jonas and Chavez, Mario and Achard, Sophie},
+  journal={Philosophical Transactions of the Royal Society B: Biological Sciences},
+  volume={369},
+  number={1653},
+  pages={20130521},
+  year={2014},
+  publisher={The Royal Society}
+}
+@article{yaffe15,       notes={review of epileptic graph theory},
+  title={Physiology of functional and effective networks in epilepsy},
+  author={Yaffe, Robert B and Borger, Philip and Megevand, Pierre and Groppe, David M and Kramer, Mark A and Chu, Catherine J and Santaniello, Sabato and Meisel, Christian and Mehta, Ashesh D and Sarma, Sridevi V},
+  journal={Clinical Neurophysiology},
+  volume={126},
+  number={2},
+  pages={227--236},
+  year={2015},
+  publisher={Elsevier}
+}
+
+    %GROUP REGULARIZATION
+@article{breheny09,
+  title={Penalized methods for bi-level variable selection},
+  author={Breheny, Patrick and Huang, Jian},
+  journal={Statistics and its interface},
+  volume={2},
+  number={3},
+  pages={369},
+  year={2009},
+  publisher={NIH Public Access}
+}
+@article{breheny15,
+  title={Group descent algorithms for nonconvex penalized linear and logistic regression models with grouped predictors},
+  author={Breheny, Patrick and Huang, Jian},
+  journal={Statistics and Computing},
+  pages={1--15},
+  year={2014},
+  publisher={Springer}
+}
+@article{zhang10,       notes={1st article of MCP},
+  title={Nearly unbiased variable selection under minimax concave penalty},
+  author={Zhang, Cun-Hui},
+  journal={The Annals of Statistics},
+  pages={894--942},
+  year={2010},
+  publisher={JSTOR}
+}
+@inproceedings{robinson15,
+  title={Estimation of a large-scale generalized Volterra for neural ensembles with group lasso and local coordinate descent},
+  author={Robinson, Brian S and Song, Dong and Berger, Theodore W},
+  booktitle={Engineering in Medicine and Biology Society (EMBC), 2015 36th Annual International Conference of the IEEE},
+  year={2015},
+  organization={IEEE}
+}
+
+    %MISC
+@article{haslinger10,   notes={discrete KS test},
+  title={Discrete time rescaling theorem: determining goodness of fit for discrete time statistical models of neural spiking},
+  author={Haslinger, Robert and Pipa, Gordon and Brown, Emery},
+  journal={Neural computation},
+  volume={22},
+  number={10},
+  pages={2477--2506},
+  year={2010},
+  publisher={MIT Press}
+}
+@article{kirkpatrick83, notes={1st SA paper},
+  title={Optimization by simmulated annealing},
+  author={Kirkpatrick, Scott and Vecchi, MP and others},
+  journal={science},
+  volume={220},
+  number={4598},
+  pages={671--680},
+  year={1983},
+  publisher={Washington}
+}
+@incollection{henderson03,  notes={SA variants},
+  title={The theory and practice of simulated annealing},
+  author={Henderson, Darrall and Jacobson, Sheldon H and Johnson, Alan W},
+  booktitle={Handbook of metaheuristics},
+  pages={287--319},
+  year={2003},
+  publisher={Springer}
+}
+@article{rajan13,       notes={review of quadratic RFs},
+  title={Learning quadratic receptive fields from neural responses to natural stimuli},
+  author={Rajan, Kanaka and Marre, Olivier and Tka{\v{c}}ik, Ga{\v{s}}per},
+  journal={Neural computation},
+  volume={25},
+  number={7},
+  pages={1661--1692},
+  year={2013},
+  publisher={MIT Press}
+}
+@article{mazzucato15,   notes={**multistable states in cortical activity IIEs},
+  title={Dynamics of Multistable States during Ongoing and Evoked Cortical Activity},
+  author={Mazzucato, Luca and Fontanini, Alfredo and La Camera, Giancarlo},
+  journal={The Journal of Neuroscience},
+  volume={35},
+  number={21},
+  pages={8214--8231},
+  year={2015},
+  publisher={Soc Neuroscience}
+}
+@article{pillow08,      notes={1st example of an RNN},
+  title={Spatio-temporal correlations and visual signalling in a complete neuronal population},
+  author={Pillow, Jonathan W and Shlens, Jonathon and Paninski, Liam and Sher, Alexander and Litke, Alan M and Chichilnisky, EJ and Simoncelli, Eero P},
+  journal={Nature},
+  volume={454},
+  number={7207},
+  pages={995--999},
+  year={2008},
+  publisher={Nature Publishing Group}
+}
+@article{ching12,       notes={complex network control strategy 4 epilepsy},
+  title={Distributed control in a mean-field cortical network model: implications for seizure suppression},
+  author={Ching, ShiNung and Brown, Emery N and Kramer, Mark A},
+  journal={Physical Review E},
+  volume={86},
+  number={2},
+  pages={021920},
+  year={2012},
+  publisher={APS}
+}
+@article{warren10,      notes={**synchrony decreased at seizure onset - isolation of focus - lowering noise to induce seizures},
+  title={Synchrony in normal and focal epileptic brain: the seizure onset zone is functionally disconnected},
+  author={Warren, Christopher P and Hu, Sanqing and Stead, Matt and Brinkmann, Benjamin H and Bower, Mark R and Worrell, Gregory A},
+  journal={Journal of neurophysiology},
+  volume={104},
+  number={6},
+  pages={3530--3539},
+  year={2010},
+  publisher={Am Physiological Soc}
+}
+@article{wendling03,    notes={**same as warren10},
+  title={Epileptic fast intracerebral EEG activity: evidence for spatial decorrelation at seizure onset},
+  author={Wendling, Fabrice and Bartolomei, Fabrice and Bellanger, Jean-Jacques and Bourien, J{\'e}rome and Chauvel, Patrick},
+  journal={Brain},
+  volume={126},
+  number={6},
+  pages={1449--1459},
+  year={2003},
+  publisher={Oxford Univ Press}
+}
+@article{desai14,       notes={**modeling of stimulation effects},
+  title={Deep brain stimulation macroelectrodes compared to multiple microelectrodes in rat hippocampus},
+  author={Desai, Sharanya Arcot and Gutekunst, Claire-Anne and Potter, Steve M and Gross, Robert E},
+  journal={Frontiers in neuroengineering},
+  volume={7},
+  year={2014},
+  publisher={Frontiers Media SA}
+}
+@article{grill05,       notes={**modeling of stimulation effects},
+  title={Current density distributions, field distributions and impedance analysis of segmented deep brain stimulation electrodes},
+  author={Wei, Xuefeng F and Grill, Warren M},
+  journal={Journal of neural engineering},
+  volume={2},
+  number={4},
+  pages={139},
+  year={2005},
+  publisher={IOP Publishing}
+}
+@article{kim14,         notes={**optimal experimental design},
+  title={A hierarchical adaptive approach to optimal experimental design},
+  author={Kim, Woojae and Pitt, Mark A and Lu, Zhong-Lin and Steyvers, Mark and Myung, Jay I},
+  journal={Neural computation},
+  year={2014},
+  publisher={MIT Press}
+}
+@article{lepage13,      notes={optimal design for functional connectivity},
+  title={Inferring evoked brain connectivity through adaptive perturbation},
+  author={Lepage, Kyle Q and Ching, ShiNung and Kramer, Mark A},
+  journal={Journal of computational neuroscience},
+  volume={34},
+  number={2},
+  pages={303--318},
+  year={2013},
+  publisher={Springer}
+}
+@book{gosavi14,         notes={**reinforcement learning book},
+  title={Simulation-based optimization: parametric optimization techniques and reinforcement learning},
+  author={Gosavi, Abhijit},
+  volume={55},
+  year={2014},
+  publisher={Springer}
+}
+@article{muldoon13,     notes={**IIEs different on micro level. Recurrent conn. makes epilepsy},
+  title={Spatially clustered neuronal assemblies comprise the microstructure of synchrony in chronically epileptic networks},
+  author={Muldoon, Sarah Feldt and Soltesz, Ivan and Cossart, Rosa},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={110},
+  number={9},
+  pages={3567--3572},
+  year={2013},
+  publisher={National Acad Sciences}
+}
+@article{racine72,      notes={**kindling hippocampus},
+  title={Modification of seizure activity by electrical stimulation: I. After-discharge threshold},
+  author={Racine, Ronald J},
+  journal={Electroencephalography and clinical neurophysiology},
+  volume={32},
+  number={3},
+  pages={269--279},
+  year={1972},
+  publisher={Elsevier}
+}
+@article{ryapolova14,   notes={**record and stimulating electrodes},
+  title={Chronic cortical and electromyographic recordings from a fully implantable device: preclinical experience in a nonhuman primate},
+  author={Ryapolova-Webb, Elena and Afshar, Pedram and Stanslaski, Scott and Denison, Tim and de Hemptinne, Coralie and Bankiewicz, Krystof and Starr, Philip A},
+  journal={Journal of neural engineering},
+  volume={11},
+  number={1},
+  pages={016009},
+  year={2014},
+  publisher={IOP Publishing}
+}
+@article{taylor15,      notes={personalized seizure control based on fMRI},
+  title={Optimal control based seizure abatement using patient derived connectivity},
+  author={Taylor, Peter Neal and Thomas, Jijju and Sinha, Nishant and Dauwels, Justin and Kaiser, Marcus and Thesen, Thomas and Ruths, Justin},
+  journal={Frontiers in Neuroscience},
+  volume={9},
+  pages={202},
+  year={2015},
+  publisher={Frontiers}
+}
+@article{blumenfeld05,  notes={**argues heterogenous thalamocrotical topology in spike-wave seizures},
+  title={Cellular and Network Mechanisms of Spike-Wave Seizures},
+  author={Blumenfeld, Hal},
+  journal={Epilepsia},
+  volume={46},
+  number={s9},
+  pages={21--33},
+  year={2005},
+  publisher={Wiley Online Library}
+}
+@article{viskontas07,   notes={**Fried human recording paper},
+  title={Characterizing interneuron and pyramidal cells in the human medial temporal lobe in vivo using extracellular recordings},
+  author={Viskontas, Indre V and Ekstrom, Arne D and Wilson, Charles L and Fried, Itzhak},
+  journal={Hippocampus},
+  volume={17},
+  number={1},
+  pages={49--57},
+  year={2007},
+  publisher={Wiley Online Library}
+}
+
+
+    %HUMAN EPILEPSY
+@article{truccolo11,    notes={1st to record human single units during seizures},
+  title={Single-neuron dynamics in human focal epilepsy},
+  author={Truccolo, Wilson and Donoghue, Jacob A and Hochberg, Leigh R and Eskandar, Emad N and Madsen, Joseph R and Anderson, William S and Brown, Emery N and Halgren, Eric and Cash, Sydney S},
+  journal={Nature neuroscience},
+  volume={14},
+  number={5},
+  pages={635--641},
+  year={2011},
+  publisher={Nature Publishing Group}
+}
+@article{truccolo14,    notes={More heavily compared netork dyn. of spikes & ECoG during human seizures},
+  title={Neuronal ensemble synchrony during human focal seizures},
+  author={Truccolo, Wilson and Ahmed, Omar J and Harrison, Matthew T and Eskandar, Emad N and Cosgrove, G Rees and Madsen, Joseph R and Blum, Andrew S and Potter, N Stevenson and Hochberg, Leigh R and Cash, Sydney S},
+  journal={The Journal of Neuroscience},
+  volume={34},
+  number={30},
+  pages={9927--9944},
+  year={2014},
+  publisher={Soc Neuroscience}
+}
+@article{bower12,       notes={human spikes- very bad analysis},
+  title={Spatiotemporal neuronal correlates of seizure generation in focal epilepsy},
+  author={Bower, Mark R and Stead, Matt and Meyer, Fredric B and Marsh, W Richard and Worrell, Gregory A},
+  journal={Epilepsia},
+  volume={53},
+  number={5},
+  pages={807--816},
+  year={2012},
+  publisher={Wiley Online Library}
+}
+
+    %STIMULATION DESIGN
+@article{wyckhuys10,    notes={1st case of RIT for DBS},
+  title={Suppression of hippocampal epileptic seizures in the kainate rat by Poisson distributed stimulation},
+  author={Wyckhuys, Tine and Boon, Paul and Raedt, Robrecht and Van Nieuwenhuyse, Bregt and Vonck, Kristl and Wadman, Wytse},
+  journal={Epilepsia},
+  volume={51},
+  number={11},
+  pages={2297--2304},
+  year={2010},
+  publisher={Wiley Online Library}
+}
+@article{van14,         notes={most recent case of RIT DBS - also looked at 2 stimulation issue (synchronicity)},
+  title={In Search of Optimal DBS Paradigms to Treat Epilepsy: Bilateral Versus Unilateral Hippocampal Stimulation in a Rat Model for Temporal Lobe Epilepsy},
+  author={Van Nieuwenhuyse, B and Raedt, R and Delbeke, J and Wadman, WJ and Boon, P and Vonck, K},
+  journal={Brain stimulation},
+  year={2014},
+  publisher={Elsevier}
+}
+@article{nelson11,      notes={experimental study looking at unsyncd DBS over 4 sites},
+  title={Exploring the tolerability of spatiotemporally complex electrical stimulation paradigms},
+  author={Nelson, Timothy S and Suhr, Courtney L and Lai, Alan and Halliday, Amy J and Freestone, Dean R and McLean, Karen J and Burkitt, Anthony N and Cook, Mark J},
+  journal={Epilepsy research},
+  volume={96},
+  number={3},
+  pages={267--275},
+  year={2011},
+  publisher={Elsevier},
+  notes={Method: 1. Stimulated rat motor cortex w/ 4 electorde MEA (4 more for recording). Checked how periodicity (RIT/FIT) & synchronicity (of 4 electrodes) affected seizure INDUCTION (not suppression)
+				-4 stimulation paradigms can be seen in fig2 - all were 60Hz
+				-all were given every 7mins for max of 10 per session (90mins)
+			2. measured strength of induced seizure by ECoG seizure length & seizure racine scale (1-5 based on rat behavior-eg shaking/chewing)
+	Results:1. Periodicity (RIT v FIT) didnt have any signif effect, but synchronicity did! (see fig6,7, table1)
+	Discussion: 1. compares epilepsy w/ PD and says epil much mpore 'spatially complex', due to different regions roles in seizures...
+	For Us: there is almost no papers exploring synchronicitys role in DBS. this one says its much more important than temporal patterns...
+	Interesting Sources:
+		-cota,2009 seems to do the same thing}
+}
+@article{buffel14,      notes={also recent Poisson stim paper. Also looks at HFS v LFS},
+  title={The effect of high and low frequency cortical stimulation with a fixed or a poisson distributed interpulse interval on cortical excitability in rats},
+  author={Buffel, Ine and Meurs, Alfred and Raedt, Robrecht and De Herdt, Veerle and Decorte, Leen and Bertier, Laurence and Delbeke, Jean and Wadman, Wytse and Vonck, Kristl and Boon, Paul},
+  journal={International journal of neural systems},
+  volume={24},
+  number={02},
+  pages={1430005},
+  year={2014},
+  publisher={World Scientific}
+}
+@article{cordeiro13,    notes={looks at synchronicity + HFS/LFS},
+  title={Modulation of excitability by continuous low-and high-frequency stimulation in fully hippocampal kindled rats},
+  author={Cordeiro, Joacir G and Somerlik, Karin H and Cordeiro, Karina K and Aertsen, Ad and Ara{\'u}jo, Jo{\~a}o C and Schulze-Bonhage, Andreas},
+  journal={Epilepsy research},
+  volume={107},
+  number={3},
+  pages={224--230},
+  year={2013},
+  publisher={Elsevier}
+}
+
+    %Seizure Control
+@article{zalay13,
+  title={Synthesis of high-complexity rhythmic signals for closed-loop electrical neuromodulation},
+  author={Zalay, Osbert C and Bardakjian, Berj L},
+  journal={Neural Networks},
+  volume={42},
+  pages={62--73},
+  year={2013},
+  publisher={Elsevier}
+}
+@article{kalitzin14,
+  title={Multiple oscillatory states in models of collective neuronal dynamics},
+  author={Kalitzin, Stiliyan and Koppert, Marcus and Petkov, George and Da Silva, Fernando Lopes},
+  journal={International journal of neural systems},
+  volume={24},
+  number={06},
+  pages={1450020},
+  year={2014},
+  publisher={World Scientific}
+}
+@article{ching12,
+  title={Distributed control in a mean-field cortical network model: implications for seizure suppression},
+  author={Ching, ShiNung and Brown, Emery N and Kramer, Mark A},
+  journal={Physical Review E},
+  volume={86},
+  number={2},
+  pages={021920},
+  year={2012},
+  publisher={APS}
+}
+@article{ehrens15,      notes={single unit seizure control alg. very similar to us, but based on fake data},
+  title={Closed-loop control of a fragile network: application to seizure-like dynamics of an epilepsy model},
+  author={Ehrens, Daniel and Sritharan, Duluxan and Sarma, Sridevi V},
+  journal={Frontiers in neuroscience},
+  volume={9},
+  year={2015},
+  publisher={Frontiers Media SA}
+}
+
+@book{NP,               notes={Neuropace manual},
+   author = {{NeuroPace, Inc}},
+   title = {RNS$\textsuperscript{\textregistered}$ System User Manual},
+   howpublished = {\url{http://neuropace.com/product/pdfs/UserManual.pdf}},
+    note = {Accessed: 2015-06-30}
+   year = {2015}
+}
+
+    %Seizure Prediction
+@article{mormann07,     notes={Seizure prediction: the long and winding road},
+  title={Seizure prediction: the long and winding road},
+  author={Mormann, Florian and Andrzejak, Ralph G and Elger, Christian E and Lehnertz, Klaus},
+  journal={Brain},
+  volume={130},
+  number={2},
+  pages={314--333},
+  year={2007},
+  publisher={Oxford Univ Press}
+}
+@article{netoff15,      notes={epilepsy detection and control review},
+  title={Future of seizure prediction and intervention: closing the loop},
+  author={Nagaraj, Vivek and Lee, Steven T and Krook-Magnuson, Esther and Soltesz, Ivan and Benquet, Pascal and Irazoqui, Pedro P and Netoff, Theoden I},
+  journal={Journal of Clinical Neurophysiology},
+  volume={32},
+  number={3},
+  pages={194--206},
+  year={2015},
+  publisher={LWW}
+}
+@article{cook13,        notes={clinical trls of human seizure prediction device},
+  title={Prediction of seizure likelihood with a long-term, implanted seizure advisory system in patients with drug-resistant epilepsy: a first-in-man study},
+  author={Cook, Mark J and O'Brien, Terence J and Berkovic, Samuel F and Murphy, Michael and Morokoff, Andrew and Fabinyi, Gavin and D'Souza, Wendyl and Yerra, Raju and Archer, John and Litewka, Lucas and others},
+  journal={The Lancet Neurology},
+  volume={12},
+  number={6},
+  pages={563--571},
+  year={2013},
+  publisher={Elsevier}
+}
+@misc{moxon12,          notes={moxon seizure prediction patent},
+  title={System and method of detecting and predicting seizures},
+  author={Moxon, Karen A and Grasse, Dane},
+  year={2012},
+  month=jun # "~1",
+  publisher={Google Patents},
+  note={US Patent App. 14/122,906}
+}
+
+    %Neuronal Granger Causality
+@article{zhou14,
+  title={Granger causality network reconstruction of conductance-based integrate-and-fire neuronal systems},
+  author={Zhou, Douglas and Xiao, Yanyang and Zhang, Yaoyu and Xu, Zhiqin and Cai, David},
+  journal={PloS one},
+  volume={9},
+  number={2},
+  pages={e87636},
+  year={2014},
+  publisher={Public Library of Science}
+}

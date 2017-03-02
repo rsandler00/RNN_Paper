@@ -1,0 +1,49 @@
+\documentclass{article}
+\usepackage[
+    natbib=true,
+    style=authoryear,
+    backend=biber,
+    labelnumber,
+    ]{biblatex}
+\addbibresource{references.bib}
+\DeclareFieldFormat{labelnumberwidth}{[#1]}
+\defbibenvironment{bibliography}  % from numeric.bbx
+  {\list
+    {\printtext[labelnumberwidth]{%
+      \printfield{prefixnumber}%
+      \printfield{labelnumber}}}
+    {\setlength{\labelwidth}{\labelnumberwidth}%
+        \setlength{\leftmargin}{\labelwidth}%
+        \setlength{\labelsep}{\biblabelsep}%
+        \addtolength{\leftmargin}{\labelsep}%
+        \setlength{\itemsep}{\bibitemsep}%
+        \setlength{\parsep}{\bibparsep}}%
+        \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+
+\begin{filecontents}{references.bib}
+@article{Smith:01,
+  author = {Smith, John},
+  year = {2001},
+  title = {Article title},
+  journal = {Journal title},
+  volume = {13},
+  pages = {1--2}
+}
+
+@book{Mueller:02,
+  author = {M{\"u}ller, Hans},
+  year = {2002},
+  title = {Book title},
+  publisher = {Publisher},
+  address = {Address}
+}
+\end{filecontents}
+
+\begin{document}
+\cite{Smith:01}, \cite{Mueller:02}
+
+\printbibliography
+
+\end{document}
