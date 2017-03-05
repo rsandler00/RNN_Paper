@@ -144,48 +144,26 @@ We believe that such a patient-specific algorithmic approach to neurostimulation
 
 \section{Methods \label{SM}}
 
-\subsection{Human Subjects and Recordings}
-All procedures were reviewed and approved by the Institutional Review Board of Wake Forest Baptist Medical Center, in accordance with National Institutes of Health guidelines.
-All surgical procedures were performed at Wake Forest Baptist Medical Center.
-Postoperative monitoring and all neurocognitive experiments were performed at the epilepsy monitoring unit at Wake Forest Baptist Medical Center.
+\subsection{Human Data}
 
-One adult subject underwent surgical implantation of FDA- approved hippocampal electrodes with shaft electrodes capable of single-unit recording and field potential recording (Macro-micro depth electrode, Ad-Tech Medical Instrumentation Corporation, Racine, WI) for localization of seizures (Fig. \ref{human}).
+Data from this study was previously published in \citet{song2016sparse}. 
+Briefly, one adult patient suffering from pharmacologically refractory epilepsy was surgically implanted with FDA-approved hippocampal electrodes capable of field potential (macro-) and single-unit (micro-) recordings (Ad-Tech Medical Instrumentation Corporation, Racine, WI) for localization of seizures. 
+All procedures performed in human patients were reviewed and approved by Wake Forest University Health Sciences IRB (protocol IRB00023148, approved 4/4/13, continuing review approval 4/4/16). 
+Inclusion in this study is voluntary and consented to separately from the surgical procedure. 
 It should be noted that the primary contribution of this work is meant to be methodological and thus data from only a single patient was used to demonstrate proof-of-concept (see discussion). 
-Inclusion in this study was voluntary and consented separately from the surgical procedure. Prospective study participants underwent appropriate clinical epilepsy screening evaluations.
-Preoperative planning and intraoperative placement of depth electrodes was performed using a frameless Brainlab Cranial Navigation System (BrainLab North America, Westchester, IL) to plan and guide electrode entry points, electrode trajectories and target points within the CA3 and CA1 subfields of each hippocampus.
-Entry points were created using cranial burr-holes; two electrodes were placed into each hippocampus, one anteriorly positioned in the head of the hippocampus and a second in the  posterior body.
-Intraoperative monitoring confirmed both single unit and field activity from all electrodes \citep{viskontas07}.
-Electrodes were subsequently passed through and secured to the scalp.
-Electrode localization was confirmed by comparing preoperative and postoperative MRI in order to identify electrode track and positioning of the "macro" electrode sites with respect to hippocampal morphology.
-Neurocognitive experiments were performed on post-implantation days 3-7 depending on clinical needs and indication for seizure localization.
+
+Participant underwent appropriate clinical epilepsy screening evaluations. 
+A frameless BrainLab Cranial Navigation System (BrainLab North America, Westchester, IL) was used to plan and guide electrode entry points, stereotaxic electrode trajectories and targets within the CA3 and CA1 subregions of each hippocampus. 
+Electrode localization is confirmed using postoperative MRI. Single unit neural activities (i.e., spike trains) are recorded and isolated using the Blackrock Cervello Elite electrophysiological recording system with a raw data acquisition frequency at 30k samples/sec without filtering, and a spike sorting frequency at 30k samples/sec with 500-5,000 Hz bandpass filtering.
 Electrodes were explanted after seizures were localized (14 days).
-
-In addition to the standard localization protocol, the patient participated in approved neurocognitive tasks while single-unit neuronal ensemble activity was recording using the microelectrodes contained within the implanted FDA-approved electrode while performing approved neurocognitive tasks.
-Neural ensemble recordings were obtained from subject hippocampi continually before and after neuropsychological testing.
-Subject underwent no additional electrode implantation nor additional monitoring phase.
-During the study period, subjects were evaluated for safety by physical and neurological examinations, and appropriate laboratory and radiographic examination and continuous video monitoring.
-
 10 minutes of continuous recordings were used to estimate all models.
-Single unit neural activity was isolated and recorded using Plexon MAP electrophysiological recording systems.
 Spikes were discretized using a 2 ms bin.
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=180mm]{human2}
-	\caption[Human Electrophysiology]{Neural recording from human hippocampus.
-		(A) MRI (1T) showing probe artifact in the human hippocampus.  “Ripples” or swellings in the track are artifactual shadows produced by the macro-electrode contacts (1-4 in B.).  CA3 and CA1 cell field locations (arrows) were determined by examination of the pre-surgical MRI.
-		(B) \textit{Top:} Diagram of 28-contact “Macro-micro” electrode (Ad-Tech Medical Devices, Inc, Racine, WI) allowing microelectrode recording from CA3 and CA1 cell layers.
-		\textit{Bottom:} Example rasterplot (row = electrode channel – Ch., vertical tick = single neuron action potential) from 10 microelectrode channels over 10s.
-		(C) Light micrograph (atlas image) of human hippocampal formation and surrounding structures highlighting CA3 and CA1 cell fields.
-	}
-	\label{human}
-\end{figure}
 
 
 \subsection{Modeling and Analysis}
 \subsubsection{Model Configuration \label{MtC}}
 A probabilistic model was used to predict the firing probability of a given output CA3 neuron based on its own spiking history and the past and present spiking activity of all other functionally connected CA3 neurons.
-Thus the probability that a particular neuron, $y(t)$ will fire at time $t$ is expressed by the probability, $\hat{y}(t)$:
+Thus the probability that a particular neuron, $y(t)$ will fire at discrete timebin $t$ is expressed by the probability, $\hat{y}(t)$:
 \begin{equation}
 \hat{y}(t)=Pr\Big(y(t)=1|x_1(t-\tau)...x_{N}(t-\tau),y(t-1-\tau)\Big)=H\Big[x_1(t-\tau)...x_{N}(t-\tau),y(t-1-\tau)\Big]
 \label{eq:prob}
@@ -197,7 +175,7 @@ The generalized linear modeling (GLM) framework was used whereby $H[]$ was decom
 \label{eq:GLM}
 \end{equation}
 $\eta(t)$, the linearized component of the GLM, takes the form of a nonparametric multiple-input autoregressive model which describes the dynamical transformation between input and output spike trains.
-It consists of a feedforward component, reflecting the effect of the $N$ input cells on the output cell, and a linear feedback/autoregressive component reflecting how the cell's past spiking history affects its current probability of spiking. Thus, the output is calculated as:
+It consists of a feedforward component, reflecting the effect of the $N$ input cells on the output cell, and a feedback/autoregressive component reflecting how the cell's past spiking history affects its current probability of spiking. Thus, the output is calculated as:
 \begin{equation}
 \eta(t)=\underbrace{k_0}_\text{baseline}+\underbrace{\sum_{n=1}^{N}F[x_n(t),k_n]}_\text{interneuronal}+
 \underbrace{F[y(t),k_{AR}]}_\text{feedback}
@@ -220,7 +198,7 @@ Mathematically, these operations are respectively defined by Eq.\ref{eq:FF}a,b:
 
 It was found that a memory of 100 ms was sufficient to model the dynamical effects of most neurons, and thus $M$ was fixed to 50 (100 ms/2 ms binwidth).
 In order to reduce the amount of model parameters and thereby increase parameter stability, we applied the Laguerre expansion technique (LET) to expand the feedforward and feedback filters over $L$ Laguerre basis functions \citep{marm04}.
-$L=6$ Laguerre basis functions were used.
+Based on previous studies, $L=6$ Laguerre basis functions were used \citep{sandler15clpp,song07}.
 Correspondingly, the amount of parameters in linear kernels was reduced from $M$ to $L$ (savings of 44 parameters) and in 2nd order kernels from to $M(M+1)/2$ to $L(L+1)/2$ (savings of 1254 parameters).
 The Laguerre parameter $\alpha$ was fixed at 0.542 to reflect this system memory \citep{marm04}.
 
@@ -229,7 +207,7 @@ The Laguerre parameter $\alpha$ was fixed at 0.542 to reflect this system memory
 Presumably, only a small portion of the total recorded neurons, $R$ causally influence any given neuron in the reconstructed neuronal network (RNN).
 This motivates the central task of identifying which neurons are effectively connected and which are not \citep{sporns09,fallani14}.
 Most methods which aim to estimate effective connectivity adopt a Granger causality approach whereby neuron A is effectively connected to neuron B only if it can help predict when neuron B will spike \citep{shoham10,brown11,sandler14,zhou14}.
-Here a penalized group regression approach was adopted which implicitly maximizes predictive power while immensely improving computationally efficiency over most explicit Granger causality approaches which usually rely on stepwise input selection \citep{song13sparse,robinson15}.
+Here a penalized group regression approach was adopted which implicitly maximizes predictive power while improving computational efficiency over commonly used stepwise input selection methods \citep{song13sparse,song16sparse}.
 
 To proceed with penalized group regression, Eq. \ref{eq:GLM} is first recast in matrix form:
 \begin{equation}
@@ -329,7 +307,7 @@ After seizure and control states were identified, a two-stage simulated annealin
 Multiple SA streams were run in parallel with 2 different mode of stimulation: periodic spiketrains (PTs) and random (Poisson) spiketrains (RTs).
 Each electrode could take on 8 possible values: \{OFF, 5 Hz, 20 Hz, 60 Hz, 100 Hz, 140 Hz, 180 Hz, 220 Hz\}.
 The electrode parameter determined the periodic stimulation frequency for PTs and the Poisson rate for RTs.
-Note that while for PTs, each parameter vector determines a unique spatiotemporal pattern, for RTs, each parameter vector only specifies the firing probability, and could correspond to an almost infinite amount of different spatiotemporal patterns.
+Note that while for PTs, each parameter vector determines a unique spatiotemporal pattern, for RTs, each parameter vector only specifies the firing probability, and could correspond to a near infinite amount of different spatiotemporal patterns.
 To further reduce the amount of parameters, the electrodes for neurons which were functionally disconnected from the RNN were kept off.
 
 The SA algorithm was run on a standard exponential cooling schedule with 120 global iterations with temperatures logarithmically spaced between $T_{start}=10$ and $T_{end}=.01$.
@@ -363,15 +341,15 @@ It was found that only 1 electrode was turned off by the pruning algorithm.
     \subsection{Reconstructed Neuronal Network}
 
 The study aims to design a realistic testbed for developing and screening efficient neurostimulation patterns for seizure abatement.
-This testbed, which we have dubbed a reconstructed neuronal network (RNN), is estimated from single unit activity in area CA3 of a human TLE patient undergoing monitoring for resective surgery (see methods, Fig. \ref{human}).
+This testbed, which we have dubbed a reconstructed neuronal network (RNN), is estimated from single unit activity in area CA3 of a human TLE patient undergoing monitoring for resective surgery (see methods).
 All procedures were reviewed and approved by the Institutional Review Board of Wake Forest University, in accordance with National Institutes of Health guidelines.
-During the recording (Fig. \ref{human}), $R=\nn{}$ distinct units were identified.
+During the recording, $R=\nn{}$ distinct units were identified.
 The aim of the RNN is to use the observed spiking activity to reconstruct in-silico the distinct effective connectivity of the \nn{} recorded neurons.
 In other words, for each neuron the RNN attempts to answer which of the other $R-1$ neurons causally influence it, and what is the dynamical nature of that influence.
 Thus, the RNN differs from most artificial neuronal networks which tend to have stereotyped connections between neurons and whose parameters are only loosely based on physiological data.
 Furthermore, the RNN is distinct from much recent work using graph theory to analyze large amounts of simultaneously recorded neuronal signals, since these studies tend to focus on functional connectivity, or undirected statistical associations between neuronal activity, rather than directed causal connections, or effective connectivity. \citep{sporns09,yaffe15}.
 
-In our model, the firing probability of each neuron at time $t$, $\hat{y}(t)$, was determined by its own past spiking activity and the past and present spiking activity of all other $N$ connected CA3 neurons, $\{x_n(t)\}$ within a finite memory of $M=100$ms and modeled using a generalized linear model (GLM) with a probit link (see Eq. \ref{eq:GLM}-\ref{eq:FF}).
+The firing probability of each neuron at time $t$, $\hat{y}(t)$, was determined by its own past spiking activity and the past and present spiking activity of all other $N$ connected CA3 neurons, $\{x_n(t)\}$ within a finite memory of $M=100$ms and modeled using a generalized linear model (GLM) with a probit link (see Eq. \ref{eq:GLM}-\ref{eq:FF}).
 Each feedforward/feedback filter is either linear or quadratic-nonlinear (2nd order Volterra)  (see Eq. \ref{eq:FF}), as determined by the group regularization algorithm used for model fitting.
 The feedback component, characterized by the filter $k_{AR}(\tau)$, can be intuitively thought of as the afterhyperpotential (AHP) \citep{spruston07} and encapsulates intracellular processes such as the absolute and relative refractory period, slow potassium conductances, and $I_h$ conductances.
 The interneuronal components, characterized by the set of input-output filters $\{k_n\}$, can be intuited as the waveform of the EPSP from the $n^{th}$ input neuron onto the output neuron.
@@ -406,7 +384,8 @@ Several features of the system can be interpreted from the filters.
 Note that neurons 8 and 14 are connected linearly while neuron 2 is connected with a quadratic filter, thus implying it exerts some form of short term potentiation.
 Also note that neuron 14 exerts an entirely excitatory influence on neuron 22, while the effect of neuron 8 oscillates between excitation and inhibition.
 Finally, the feedback kernel is composed of initial refractory inhibition, followed by oscillatory bursting activity.
-Interestingly it oscillates at 5 Hz, squarely in the theta range, which has been implicated extensively in memory tasks in the hippocampus \citep{buzsaki06,sandler14}.
+Interestingly it oscillates at 5 Hz, which is in the low theta range. 
+This oscillation has been extensively implicated in memory tasks in the hippocampus \citep{buzsaki06,sandler14}.
 
 \begin{figure}[!ht]
 \centering
@@ -441,7 +420,6 @@ The dominant subnetwork of neurons which comprised the seizure cluster is shown 
 These 6 neurons are responsible for most of the spiking activity within the seizure state, and their reciprocal connectivity is presumably responsible for maintaining the seizure dynamics.
 Many neurons maintained their regular firing rate, and 2 neurons even reduced their firing rate.
 These observations match the heterogeneity of neurons in recorded human seizures \citep{bower12}.
-Interestingly, all of the neurons within the seizure subnetwork had lowering firing rates in actual recordings, suggesting they may be principal cells.
 %Furthermore, it was found that a much higher percentage (28/32, or $88\%$) of the epileptic subnetwork connections were bidirectional, supporting the notion that seizures emerge from heavily interconnected neuronal networks \citep{muldoon13}.
 Finally, the cluster state of the network was identified at each moment in time (Fig. \ref{seizure}b,bottom).
 As can be seen, this method is able to reliably detect the when the RNN enters and leaves the seizure state, thus effectively making it a prototype seizure detection algorithm \citep{mormann07,cook13,netoff15}.
