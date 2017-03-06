@@ -90,7 +90,7 @@ Designing Patient-Specific Optimal Neurostimulation Patterns for Seizure Suppres
 \begin{abstract}
 Neurostimulation is a promising therapy for abating epileptic seizures.
 However, it is extremely difficult to identify optimal stimulation patterns experimentally.
-In this study we use nonlinear statistical modeling to reconstruct the unique connectivity and interneuronal dynamics of \nn{} neurons recorded from human hippocampus.
+In this study we use nonlinear statistical modeling to reconstruct the unique connectivity and dynamics of \nn{} neurons recorded from human hippocampus.
 Spontaneous seizure-like activity is induced \textit{in-silico} in the reconstructed neuronal network.
 This network is then used as a testbed to design and validate a wide range of neurostimulation patterns.
 It was found that the commonly used synchronized periodic trains were not able to permanently abate seizures at any frequency.
@@ -136,7 +136,7 @@ Nonetheless, there is an increasing feeling in the field that a more principled 
 In past work we have developed a closed-loop model of the rodent hippocampus and used this model to identify the optimal frequency of stimulation needed to reduce network output \citep{sandler15clpp}.
 However, the above model was limited to 2 reciprocally connected neurons and thus important features of epilepsy such as population synchrony could not be studied.
 Here we use \nn{} neurons recorded from the hippocampus of a human temporal lobe epilepsy (TLE) patient to reconstruct the patient's distinct neuronal connectivity and causal dynamics.
-Spontaneous seizure activity is then initiated in the reconstructed neuronal network.
+Spontaneous seizure activity is then initiated in the reconstructed neuronal network (RNN).
 Finally, this model is used as an \textit{in-silico} testbed for designing and testing efficient neurostimulation patterns.
 The optimal stimulus, obtained via a global optimization algorithm, was found to abate \success{}\% of seizures, and significantly outperformed any other traditional stimulation types.
 We believe that such a patient-specific algorithmic approach to neurostimulation design can significantly increase the efficacy of neurostimulation devices for epilepsy.
@@ -146,125 +146,41 @@ We believe that such a patient-specific algorithmic approach to neurostimulation
 
 \subsection{Human Data}
 
-Data from this study was previously published in \citet{song2016sparse}. 
+Data from this study was previously published in \citet{song16sparse}. 
 Briefly, one adult patient suffering from pharmacologically refractory epilepsy was surgically implanted with FDA-approved hippocampal electrodes capable of field potential (macro-) and single-unit (micro-) recordings (Ad-Tech Medical Instrumentation Corporation, Racine, WI) for localization of seizures. 
-All procedures performed in human patients were reviewed and approved by Wake Forest University Health Sciences IRB (protocol IRB00023148, approved 4/4/13, continuing review approval 4/4/16). 
-Inclusion in this study is voluntary and consented to separately from the surgical procedure. 
+All procedures performed in human patients were reviewed and approved by Wake Forest University Health Sciences IRB (protocol IRB00023148). 
+Inclusion in this study was voluntary and consented to separately from the surgical procedure. 
 It should be noted that the primary contribution of this work is meant to be methodological and thus data from only a single patient was used to demonstrate proof-of-concept (see discussion). 
 
 Participant underwent appropriate clinical epilepsy screening evaluations. 
-A frameless BrainLab Cranial Navigation System (BrainLab North America, Westchester, IL) was used to plan and guide electrode entry points, stereotaxic electrode trajectories and targets within the CA3 and CA1 subregions of each hippocampus. 
-Electrode localization is confirmed using postoperative MRI. Single unit neural activities (i.e., spike trains) are recorded and isolated using the Blackrock Cervello Elite electrophysiological recording system with a raw data acquisition frequency at 30k samples/sec without filtering, and a spike sorting frequency at 30k samples/sec with 500-5,000 Hz bandpass filtering.
+A frameless BrainLab Cranial Navigation System (BrainLab North America, Westchester, IL) was used to plan and guide electrode entry points, stereotaxic electrode trajectories, and targets within the CA3 and CA1 subregions of each hippocampus. 
+Electrode localization was confirmed using postoperative MRI. 
+Single unit neural activities (i.e., spike trains) were recorded and isolated using the Blackrock Cervello Elite electrophysiological recording system with a raw data acquisition frequency at 30k samples/sec without filtering, and a spike sorting frequency at 30k samples/sec with 500-5,000 Hz bandpass filtering.
 Electrodes were explanted after seizures were localized (14 days).
 10 minutes of continuous recordings were used to estimate all models.
 Spikes were discretized using a 2 ms bin.
 
+\subsection{Dynamic Connectivity Model Structure and Estimation}
 
-\subsection{Modeling and Analysis}
-\subsubsection{Model Configuration \label{MtC}}
-A probabilistic model was used to predict the firing probability of a given output CA3 neuron based on its own spiking history and the past and present spiking activity of all other functionally connected CA3 neurons.
-Thus the probability that a particular neuron, $y(t)$ will fire at discrete timebin $t$ is expressed by the probability, $\hat{y}(t)$:
-\begin{equation}
-\hat{y}(t)=Pr\Big(y(t)=1|x_1(t-\tau)...x_{N}(t-\tau),y(t-1-\tau)\Big)=H\Big[x_1(t-\tau)...x_{N}(t-\tau),y(t-1-\tau)\Big]
-\label{eq:prob}
-\end{equation}
-where $\{x_n(t)\}$ reflect the $N$ effectively connected spiketrains from CA3, $\tau$ reflects the finite memory of the system which ranges from $0 \leq \tau \leq M$, and $H[]$ reflects the mathematical model which is used to describe the dynamical transformation from $\{x_n(t)\}\to y(t)$.
-The generalized linear modeling (GLM) framework was used whereby $H[]$ was decomposed into a linearized function of the inputs, $\eta(t)$, followed by a static nonlinearity, here chosen to be the probit link function \citep{truccolo05,song07}:
-\begin{equation}
-\hat{y}(t)=\Phi\Big(\eta(t),\sigma\Big)=\frac{1}{\sqrt{2\pi\sigma^2}}\int_{-\infty}^xe^{-\frac{1}{2}(\frac{\eta(t)}{\sigma})^2}
-\label{eq:GLM}
-\end{equation}
-$\eta(t)$, the linearized component of the GLM, takes the form of a nonparametric multiple-input autoregressive model which describes the dynamical transformation between input and output spike trains.
-It consists of a feedforward component, reflecting the effect of the $N$ input cells on the output cell, and a feedback/autoregressive component reflecting how the cell's past spiking history affects its current probability of spiking. Thus, the output is calculated as:
-\begin{equation}
-\eta(t)=\underbrace{k_0}_\text{baseline}+\underbrace{\sum_{n=1}^{N}F[x_n(t),k_n]}_\text{interneuronal}+
-\underbrace{F[y(t),k_{AR}]}_\text{feedback}
-\label{eq:MVAR}
-\end{equation}
-where $F[x_n(t),k_n]$ models the feedforward effects of input $x_n(t)$, $F[y(t),k_{AR}]$ models feedback effects, and $k_0$, the constant offset term, models the baseline firing probability.
+The aim of the RNN is to use the observed spiking activity to reconstruct in-silico the distinct effective connectivity of the \nn{} recorded neurons.
+In other words, for each neuron the RNN attempts to answer which of the other $R-1$ neurons causally influence it, and what is the dynamical nature of that influence.
 
-In past studies, feedforward effects were fixed to be either linear \citep{sandler14} or nonlinear \citep{sandler15,song07}, and feedback effects were fixed to be linear \citep{song07}.
-In this study, using the sparse group selection algorithm (see section \ref{MtE}), it is possible to determine whether particular inputs and feedback effects are best modeled by either a linear or nonlinear kernel (see Fig. \ref{graph}d).
-In this study, linear refers to convolution with a linear filter, $k^{(1)}(\tau)$, while nonlinear refers to convolution with a quadratic (2nd order Volterra) filter, $k^{(2)}(\tau_1,\tau_2)$ \citep{marm04,rajan13}.
-Mathematically, these operations are respectively defined by Eq.\ref{eq:FF}a,b:
+The firing probability of each neuron at time $t$, $\hat{y}(t)$, was determined by its own past spiking activity and the past and present spiking activity of all other $N$ connected CA3 neurons, $\{x_n(t)\}$ within a finite memory of $M=100$ms and modeled using a generalized linear model (GLM) with a probit link (see Eq. \ref{eq:GLM}-\ref{eq:FF}).
+Each feedforward/feedback filter is either linear or quadratic-nonlinear (2nd order Volterra)  (see Eq. \ref{eq:FF}), as determined by the group regularization algorithm used for model fitting.
+The feedback component, characterized by the filter $k_{AR}(\tau)$, can be intuitively thought of as the afterhyperpotential (AHP) \citep{spruston07} and encapsulates intracellular processes such as the absolute and relative refractory period, slow potassium conductances, and $I_h$ conductances.
+The interneuronal components, characterized by the set of input-output filters $\{k_n\}$, can be intuited as the waveform of the EPSP from the $n^{th}$ input neuron onto the output neuron.
+A nonlinear filter is potentially included to describe interactions between two input pulses, such as paired pulse facilitation and depression \citep{song09par1,sandler15}.
+More detailed information on model structure can be found in the appendix. 
+It should be noted that the model is a "blackbox", or entirely based on data, and thus makes no \textit{a priori} assumptions on the nature of the feedback and interneuronal dynamics.
+Therefore, the estimated filters include the previously listed phenomena as well as more indirect/nonlinear phenomena such as dendritic integration, spike generation, active membrane conductances, and feedforward interneuronal inhibition (thereby allowing the filters between two pyramidal cells to be inhibitory).
 
-\begin{subequations}
-	\begin{align}
-	F[x(t),k^{(1)}(\tau)]=\sum_{\tau=0}^{M}k^{(1)}(\tau)x(t-\tau)\\
-	F[x(t),k^{(2)}(\tau_1,\tau_2)]=\sum_{\tau_1=1}^M\sum_{\tau_2=1}^Mk^{(2)}(\tau_1,\tau_2)x(t-\tau_1)x(t-\tau_2)
-	\end{align}
-	\label{eq:FF}
-\end{subequations}
+All GLM parameters, which implicitly describe both connectivity and causal dynamics, were fit simultaneously for each neuron using MCP group regularization and a coordinate descent algorithm (see appendix \ref{MtE}).
+It should be noted that because parameters were estimated from spontaneous data rather than from direct perturbations of the network, all parameter estimates may be biased by unobserved inputs (see discussion).
+A Monte Carlo style shuffling approach was used to insure all obtained models had significant predictive power and were not simply overfitting (see appendix \ref{MtV}).
 
-It was found that a memory of 100 ms was sufficient to model the dynamical effects of most neurons, and thus $M$ was fixed to 50 (100 ms/2 ms binwidth).
-In order to reduce the amount of model parameters and thereby increase parameter stability, we applied the Laguerre expansion technique (LET) to expand the feedforward and feedback filters over $L$ Laguerre basis functions \citep{marm04}.
-Based on previous studies, $L=6$ Laguerre basis functions were used \citep{sandler15clpp,song07}.
-Correspondingly, the amount of parameters in linear kernels was reduced from $M$ to $L$ (savings of 44 parameters) and in 2nd order kernels from to $M(M+1)/2$ to $L(L+1)/2$ (savings of 1254 parameters).
-The Laguerre parameter $\alpha$ was fixed at 0.542 to reflect this system memory \citep{marm04}.
-
-
-\subsubsection{Model Estimation \label{MtE}}
-Presumably, only a small portion of the total recorded neurons, $R$ causally influence any given neuron in the reconstructed neuronal network (RNN).
-This motivates the central task of identifying which neurons are effectively connected and which are not \citep{sporns09,fallani14}.
-Most methods which aim to estimate effective connectivity adopt a Granger causality approach whereby neuron A is effectively connected to neuron B only if it can help predict when neuron B will spike \citep{shoham10,brown11,sandler14,zhou14}.
-Here a penalized group regression approach was adopted which implicitly maximizes predictive power while improving computational efficiency over commonly used stepwise input selection methods \citep{song13sparse,song16sparse}.
-
-To proceed with penalized group regression, Eq. \ref{eq:GLM} is first recast in matrix form:
-\begin{equation}
-\bm{\hat{y}}=\Phi(\bm{\eta})=\Phi(\bm{Vc})
-\label{eq:mat}
-\end{equation}
-where $\bm{\hat{y}}$ and $\bm{\eta}$ are the vectors consisting of $\hat{y}(t)$ and $\eta(t)$ for $1\leq t \leq T$, $\bm{V}$ is the design matrix consisting of the convolved inputs and, for quadratic kernels, their cross products \citep{marm04}, and  $\bm{c}$ is the vector of model parameters to be estimated.
-In the \nn{} neuron RNN, there are 300,000 observations and 649 unknown parameters.
-% 1+N*(L+L(L+1)/2)
-
-The input parameters are divided into $2R$ groups consisting of 2 groups for every putative input: one group for the $L$ 1st order kernel parameters and another for the $L(L+1)/2$ 2nd order kernel parameters.
-The objective is now to find the optimal parameter vector, $\bm{c}^*$ which minimizes the cost function composed of the sum of the negative log-loss likelihood and the group regularization term, $P(\bm{c})$:
-\begin{equation}
-C(\bm{c};\bm{y},\bm{V})=\sum_{t=1}^T\Big(y(t)log\hat{y}(t)+(1-y(t))log(1-\hat{y}(t))\Big)+\sum_{g=1}^{2R}P(\bm{c_g})
-\label{eq:cost}
-\end{equation}
-where $\bm{c_g}$ is the group parameter vector containing only the parameters within group $g$.
-The function of the regularization term is to automatically set to 0 any parameter groups which are not found to significantly influence the output - thus implicitly estimating sparse functional connectivity.
-Here, the group minimax concave penalty (MCP) regularizer was chosen over the more conventional group LASSO because (1) it induces much less regularization based parameter shrinkages (biases) than the latter (2) it leads to much sparser solutions than the latter \citep{breheny15,zhang10}.
-The MCP regularizer is defined as:
-\begin{equation}
-P(\bm{c_g};\lambda,\gamma) =
-\begin{cases}
-\lambda\|\bm{c_g}\|-\frac{\|\bm{c_g}\|^2}{2\gamma}  & \|\bm{c_g}\| \leq \gamma\lambda \\
-\frac{1}{2}\gamma\lambda^2                          & \|\bm{c_g}\| >    \gamma\lambda
-\end{cases}
-\end{equation}
-where $\lambda$ determines the strength of regularization and $\gamma$, which was fixed at 3, determines the range over which MCP regularization is applied \citep{breheny15}.
-The group coordinate descent algorithm outlined in \citet{breheny15} was used to find $\bm{c}^*$.
-
-The optimal $\lambda$ value was selected using a warm-start regularization path approach using 90 logarithmically spaced $\lambda$ values.
-At each iteration, the Pearson correlation, $\rho$ was computed between the recorded spiketrain, $y(t)$, and the estimated spike probabilities, $\hat{y}(t)$, on a testing set consisting of 20\% of data randomly selected from $\bm{V}$.
-$\rho$ was used since (1) it was previously found to be a robust metric of similarity between spiketrains and continuous signals \citep{sandler14} and (2) it led to sparser solutions than the more commonly used cross-entropy error.
-Finally, the optimal $\lambda$ was selected as the largest $\lambda$ which achieved $>99\%$ of the max $\rho$ value.
-The regularization path can be seen in Fig. \ref{regpath}.
-
-Since any regularization will necessarily bias obtained parameters to varying degrees, all parameters of nonsparse groups were reestimated without sparse groups and without the regularization term.
-Note that due to computational efficiency and simplicity the initial search for $\lambda$ uses a logit link function \citep{breheny15}, while the final reestimation was done using the probit link of Eq. \ref{eq:GLM}.
-All computations were done in Matlab using custom code available upon request.
-A standard 3.2Ghz, 6-core desktop computer was able to estimate the \nn{}-neuron RNN in approximately 3 hours.
-
-\subsubsection{Model Validation \label{MtV}}
-To avoid overfitting, Monte Carlo style simulations were used to select those models which represent significant causal connections between input and output neurons and do not just fit noise \citep{sandler14}.
-The following procedure was used: in each run the real input was divided into 40 blocks and these blocks were randomly permuted with respect to the output.
-A model was then generated between the permuted inputs and the real output, and the Pearson correlation coefficient, $\rho_{i}$, was obtained as a metric of performance.
-$T=40$ such simulations were conducted for each output and a set of performance metrics, $\{\rho_{i}\}_{i}^{T}$, was obtained.
-Then, using Fisher's transformation, we tested the hypothesis, $H_{0}$, that $\rho$ was within the population of $\{\rho_{i}\}$.
-If this hypothesis could be rejected at the 99.99\% significance level, the model was deemed significant.
-The very conservative threshold ($P<.0001$) was used due to the large amount of comparisons being made.
-
-Two metrics were used to evaluate the goodness-of-fit of the estimated models by comparing the estimated continuous output, $\hat{y}(t)$ with the true binary output $y(t)$.
-Receiver Operator characteristic (ROC) curves plot the true positive rate against the false positive rate over the putative range of threshold values for the continuous output, $y(t)$ (Fig. \ref{regpath}c, \citet{zanos08}).
-The second metric used was the discrete KS test \citep{haslinger10,song13sparse} which compares the ISI distribution of the time rescaled probabilistic estimates with that of a homogenous Poisson process (Fig. \ref{regpath}d).
-All model assessment metrics were evaluated on the testing set.
-
-\subsubsection{Simulation \& Clustering}
-The simulated neuronal outputs, $\tilde{y}_n(t)$ are defined as an inhomogeneous Bernoulli process with spiking determined by:
+\subsection{Simulation \& Clustering}
+After neuronal connectivity is estimated, network activity can be simulated in a forward manner using the estimated coefficients 
+For each time bin $t$, the output of the $n^{th}$ neuron, $\tilde{y}_n(t)$ is modeled by an inhomogeneous Bernoulli process (i.e. biased coin flip) whose probability of firing is determined by the past and present spiking activity of other connected neurons: 
 \begin{equation}
 \tilde{y}_n(t) =
 \begin{cases}
@@ -273,7 +189,7 @@ The simulated neuronal outputs, $\tilde{y}_n(t)$ are defined as an inhomogeneous
 \end{cases}
 \label{eq:simul}
 \end{equation}
-where $\{\tilde{\eta}_n(t)\}$ are the simulated firing probabilities based on past and present simulated spike activity and $u$ is a standard uniform random number.
+Here $\Phi()$ is the probit link function (Eq. \ref{eq:GLM}), $\tilde{\eta}_n(t)$ is the linearly weighted combination of past and present spiking activity for neuron $n$ (see Eq. \ref{eq:MVAR}), and $u$ is a standard uniform random number.
 Equivalently, the neuronal output can be viewed as being generated by a prethreshold signal, composed of the sum of a deterministic component (Eq. \ref{eq:FF}) and Gaussian white noise (GWN) of variance $\sigma^2$, followed by a fixed threshold of 0 which is implicit in probit link formulation \citep{berger12}:
 \begin{equation}
 \tilde{y}_n(t) =
@@ -283,7 +199,9 @@ Equivalently, the neuronal output can be viewed as being generated by a prethres
 \end{cases}
 \label{eq:simul2}
 \end{equation}
+Note that due to the stochastic nature of the simulation and the neuronal baseline firing rates, which are determined by the $k_0$ coefficients (see appendix), the model will generate spiking activity even without any explicit exogenous input. 
 
+It was found that when the RNN simulation was allowed to run, it would spontaneously enter distinct network states for extended time periods.
 A clustering algorithm was used to identify the distinct stable dynamical states which emerged in the RNN output \citep{sasaki07,santaniello14}.
 To apply the clustering algorithm, the instantaneous MFR was first computed for each neuron using a 100 ms moving average filter.
 5 principal components (PCs) were then extracted from the \nn{} instantaneous MFR vectors (Fig. \ref{seizure}c).
@@ -291,7 +209,7 @@ These 5 PCs were then clustered using a standard k-means algorithm.
 Finally, for each state, dominant subnetworks of neurons were found by identifying the most significant neurons within the cluster (Fig. \ref{seizure}e).
 
 
-	\subsubsection{Stimulation Optimization}
+\subsection{Stimulation Optimization}
 The RNN framework allows binary external stimulation, $s(n,t)$ to be applied to neuron (or 'electrode') $n$ at time $t$ by superimposing a spike onto that neuron at that time.
 Essentially, Eq. \ref{eq:simul} is modified to be:
 \begin{equation}
@@ -340,26 +258,10 @@ It was found that only 1 electrode was turned off by the pruning algorithm.
 
     \subsection{Reconstructed Neuronal Network}
 
-The study aims to design a realistic testbed for developing and screening efficient neurostimulation patterns for seizure abatement.
+This study aims to design a realistic testbed for developing and screening efficient neurostimulation patterns for seizure abatement.
 This testbed, which we have dubbed a reconstructed neuronal network (RNN), is estimated from single unit activity in area CA3 of a human TLE patient undergoing monitoring for resective surgery (see methods).
-All procedures were reviewed and approved by the Institutional Review Board of Wake Forest University, in accordance with National Institutes of Health guidelines.
-During the recording, $R=\nn{}$ distinct units were identified.
-The aim of the RNN is to use the observed spiking activity to reconstruct in-silico the distinct effective connectivity of the \nn{} recorded neurons.
-In other words, for each neuron the RNN attempts to answer which of the other $R-1$ neurons causally influence it, and what is the dynamical nature of that influence.
-Thus, the RNN differs from most artificial neuronal networks which tend to have stereotyped connections between neurons and whose parameters are only loosely based on physiological data.
-Furthermore, the RNN is distinct from much recent work using graph theory to analyze large amounts of simultaneously recorded neuronal signals, since these studies tend to focus on functional connectivity, or undirected statistical associations between neuronal activity, rather than directed causal connections, or effective connectivity. \citep{sporns09,yaffe15}.
+$R=\nn{}$ distinct units were identified and used for the RNN. 
 
-The firing probability of each neuron at time $t$, $\hat{y}(t)$, was determined by its own past spiking activity and the past and present spiking activity of all other $N$ connected CA3 neurons, $\{x_n(t)\}$ within a finite memory of $M=100$ms and modeled using a generalized linear model (GLM) with a probit link (see Eq. \ref{eq:GLM}-\ref{eq:FF}).
-Each feedforward/feedback filter is either linear or quadratic-nonlinear (2nd order Volterra)  (see Eq. \ref{eq:FF}), as determined by the group regularization algorithm used for model fitting.
-The feedback component, characterized by the filter $k_{AR}(\tau)$, can be intuitively thought of as the afterhyperpotential (AHP) \citep{spruston07} and encapsulates intracellular processes such as the absolute and relative refractory period, slow potassium conductances, and $I_h$ conductances.
-The interneuronal components, characterized by the set of input-output filters $\{k_n\}$, can be intuited as the waveform of the EPSP from the $n^{th}$ input neuron onto the output neuron.
-A nonlinear filter is potentially included to describe interactions between two input pulses, such as paired pulse facilitation and depression \citep{song09par1,sandler15}.
-It should be noted that the model is a "blackbox", or entirely based on data, and thus makes no \textit{a priori} assumptions of the nature of the feedback and interneuronal dynamics.
-Therefore, the estimated filters include the previously listed phenomena as well as more indirect/nonlinear processes such as dendritic integration, spike generation, active membrane conductances, and feedforward interneuronal inhibition (thereby allowing the filters between two pyramidal cells to be inhibitory).
-
-All GLM parameters, which implicitly describe both connectivity and causal dynamics, were fit simultaneously for each neuron using group regularization and a coordinate descent algorithm.
-It should be noted that because parameters were estimated from spontaneous data rather than from direct perturbations of the network, all parameter estimates may be biased by unobserved inputs (see discussion).
-A Monte Carlo style shuffling approach was used to insure all obtained models had significant predictive power and were not simply overfitting.
 The obtained connectivity graph is shown in Fig. \ref{graph}a.
 The optimization regularization path is shown in Fig. \ref{regpath}a,b.
 Further metrics quantifying the predictive power of the estimated models, including ROC plots and the KS-test are shown in Fig. \ref{regpath}c,d.
@@ -368,6 +270,17 @@ The remaining 6 neurons were functionally isolated from the network: they neithe
 Of the significant connections, a much larger number than expected were found to be bidirectionally connected (71.43\%, $P<.001$. Fig. \ref{graph}b).
 All neurons had an average of 5.3 inputs and outputs.
 Furthermore, there was a positive correlation between number of inputs and number of outputs, suggesting a small-world network (Fig. \ref{graph}c; \citet{sporns09,fallani14}).
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=160mm]{graph}
+	\caption[Graph \& Example System]{
+		(A) Graph of all identified effective connections. Dashed lines indicate unidirectional connections, while solid lines indicate bidirectional connections. Note that some (like 23) neurons are effectively disconnected from the from the population.
+		(B) Barplot showing \% of total possible connections and the \% of those which are bidirectional.
+		(C) Positive correlation of the \# of outputs a given neuron has vs the \# of inputs it has. Regression data is given in the figure for best fit line. Red lines shown means of x and y data.
+		(D) Sample three input system of neuron \#22 (enclosed in red box in A). Input spiketrains are convolved with either a linear or quadratic filter and then summed with Gaussian noise and feedback effects to generate the prethreshold sum. They are then put through a threshold of 0 to generate a binary output.}
+	\label{graph}
+\end{figure}
 
 \begin{figure}[!ht]
 	\centering
@@ -386,17 +299,6 @@ Also note that neuron 14 exerts an entirely excitatory influence on neuron 22, w
 Finally, the feedback kernel is composed of initial refractory inhibition, followed by oscillatory bursting activity.
 Interestingly it oscillates at 5 Hz, which is in the low theta range. 
 This oscillation has been extensively implicated in memory tasks in the hippocampus \citep{buzsaki06,sandler14}.
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=160mm]{graph}
-\caption[Graph \& Example System]{
-(A) Graph of all identified effective connections. Dashed lines indicate unidirectional connections, while solid lines indicate bidirectional connections. Note that some (like 23) neurons are effectively disconnected from the from the population.
-(B) Barplot showing \% of total possible connections and the \% of those which are bidirectional.
-(C) Positive correlation of the \# of outputs a given neuron has vs the \# of inputs it has. Regression data is given in the figure for best fit line. Red lines shown means of x and y data.
-(D) Sample three input system of neuron \#22 (enclosed in red box in A). Input spiketrains are convolved with either a linear or quadratic filter and then summed with Gaussian noise and feedback effects to generate the prethreshold sum. They are then put through a threshold of 0 to generate a binary output.}
-\label{graph}
-\end{figure}
 
     \subsection{Seizure Initiation and Classification}
 
@@ -573,11 +475,11 @@ A central goal of future work will be to see how well the algorithm performs on 
 
 After the RNN was estimated, seizure dynamics were induced by raising membrane potential and isolating the network from external noise (Fig. \ref{graph}), both features which have been implicated in initiating physiological seizures \citep{fricker99,wendling03,warren10}.
 Finally, a simulated annealing algorithm was used to design an optimal stimulation pattern to induce the network to leave the seizure state (Fig. \ref{SAresults}).
-The optimal stimulation was found to abate 100\% of seizures and was  successfully used in a responsive stimulation paradigm to prevent seizures from developing in the RNN (Fig. \ref{MC}-\ref{RS}).
+The optimal stimulation was found to abate \success{}\% of seizures and was  successfully used in a responsive stimulation paradigm to prevent seizures from developing in the RNN (Fig. \ref{MC}-\ref{RS}).
 These results lead us to hypothesize that (1) the unique nature of every patient's seizure focus proscribes any single neurostimulation pattern from being optimal in every patient (2) the distinctive nature of the seizure focus can be exploited to algorithmically develop efficient patient-specific neurostimulation patterns.
 
 A conceptually similar approach has been used in a recent study where a neural mass model of the thalamocortical network estimated from patient data was used to explain why particular frequencies of stimulation were successful to abate seizures while others were not \citep{wendling13}.
-Additionally, such a customized/algorithmic approach has already begun to be applied to develop neurostimulation patterns for Parkinson's Disease (PD) \citep{holt14,grill14patent}.
+Additionally, such a customized/algorithmic approach has already begun to be applied to develop neurostimulation patterns for Parkinson's Disease (PD) \citep{holt14,grill14patent,brocker17}.
 However, in PD, one has near instantaneous feedback of the stimulation by assessing its effects on the patient's tremor \citep{grill13}.
 The challenges are much greater in epilepsy where physician must oftentimes wait several months before they can access the quality of a particular stimulation design due to the infrequency of seizures.
 Furthermore, physicians cannot "go back in time" to see how a particular seizure would have evolved had a different stimulation pattern been applied or had no stimulation been applied at all.
@@ -603,9 +505,10 @@ This ability to experimentally validate our model predictions is lacking in many
 While the current framework provided very strong computational results, several limitations need to be addressed before it can be applied experimentally.
 The network dynamics were estimated from spontaneous/observed data and predictive power was used to determine connectivity.
 This Granger-causality approach is biased by unobserved inputs, and in this case, every neuron within CA3 and every neuron which inputs to CA3 (such as those from the entorhinal cortex) are potential unobserved inputs.
+%%add nonstationarity stuff
 Furthermore, our model of electrical stimulation, which assumes a single electrode can illicit a spike in a single neuron, is overly simplistic.
-Any stimulation will affect at least dozens of surrounding cells \citep{grill05,desai14}; furthermore, suprathreshold stimulation may kindle seizures \citep{racine72} and thus subthreshold stimulation which only increases a neuron's firing probability without guaranteeing a spike is more realistic.
-Both of these issues can simultaneously be overcome by actively perturbing the network using sequential stimulus pulses across multiple electrodes.
+Any stimulation will affect at least dozens of surrounding cells \citep{grill05,desai14}.
+Both of these issues can simultaneously be overcome by experimentally perturbing the network using sequential stimulus pulses across multiple electrodes.
 Efficient algorithms are already being developed for how to optimally design such experiments \citep{lepage13,kim14}
 
 The model presented here relied on single unit activity.
@@ -618,10 +521,11 @@ Most importantly, there is a need to validate the obtained results experimentall
 We imagine that the advocated framework will need to go through several iterations of experimental refinement until the strong computational results achieved here can be matched in actual animal models or human patients.
 
 From a computational perspective, several improvements can be made for stimulation design and control.
-While the simulated annealing algorithm considered a very large space of stimulation possibilities ($2^{176}$ total), several stimulation patterns were not considered such as those which intermixed periodic and random pulse trains and completely arbitrary pulse trains \citep{grill14patent2}.
+While the simulated annealing algorithm considered a very large space of stimulation possibilities ($2^{176}$ total), several stimulation patterns were not considered such as those which intermixed periodic and random pulse trains and completely arbitrary pulse trains \citep{grill14patent2,brocker17}.
 Furthermore, results may potentially be improved by incorporating the relative phases between different pulse trains into the algorithm.
 Also, a relatively simple control strategy based on the Neuropace device was employed.
 The advantage of this strategy was that the stimulation was independent of the seizure specifics.
+%%multi seizure stuff
 In the future more sophisticated control algorithms may be employed which emit different stimulation patterns based on the quality and progression of the specific seizure \citep{ching12,zalay13,kalitzin14,ehrens15}.
 Overall, while many improvements can be made in the specifics, we believe that the overall framework presented here has the potential to significantly increase the effectiveness of neurostimulation for epilepsy.
 
@@ -637,6 +541,109 @@ While admittedly, such a task may seem incredibly difficult to realize we believ
 Furthermore, this goal may be much more accessible than other promising treatments for epilepsy since the hardware is already there.
 All that needs to be done is to improve the software.
 
+\section*{Appendix: Dynamic Connectivity Model and Estimation}
+
+\subsubsection{Model Structure \label{MtC}}
+A probabilistic model was used to predict the firing probability of a given output CA3 neuron based on its own spiking history and the past and present spiking activity of all other functionally connected CA3 neurons.
+Thus the probability that a particular neuron, $y(t)$ will fire at discrete timebin $t$ is expressed by the probability, $\hat{y}(t)$:
+\begin{equation}
+\hat{y}(t)=Pr\Big(y(t)=1|x_1(t-\tau)...x_{N}(t-\tau),y(t-1-\tau)\Big)=H\Big[x_1(t-\tau)...x_{N}(t-\tau),y(t-1-\tau)\Big]
+\label{eq:prob}
+\end{equation}
+where $\{x_n(t)\}$ reflect the $N$ effectively connected spiketrains from CA3, $\tau$ reflects the finite memory of the system which ranges from $0 \leq \tau \leq M$, and $H[]$ reflects the mathematical model which is used to describe the dynamical transformation from $\{x_n(t)\}\to y(t)$.
+The generalized linear modeling (GLM) framework was used whereby $H[]$ was decomposed into a linearized function of the inputs, $\eta(t)$, followed by a static nonlinearity, here chosen to be the probit link function \citep{truccolo05,song07}:
+\begin{equation}
+\hat{y}(t)=\Phi\Big(\eta(t),\sigma\Big)=\frac{1}{\sqrt{2\pi\sigma^2}}\int_{-\infty}^xe^{-\frac{1}{2}(\frac{\eta(t)}{\sigma})^2}
+\label{eq:GLM}
+\end{equation}
+$\eta(t)$, the linearized component of the GLM, takes the form of a nonparametric multiple-input autoregressive model which describes the dynamical transformation between input and output spike trains.
+It consists of a feedforward component, reflecting the effect of the $N$ input cells on the output cell, and a feedback/autoregressive component reflecting how the cell's past spiking history affects its current probability of spiking. Thus, the output is calculated as:
+\begin{equation}
+\eta(t)=\underbrace{k_0}_\text{baseline}+\underbrace{\sum_{n=1}^{N}F[x_n(t),k_n]}_\text{interneuronal}+
+\underbrace{F[y(t),k_{AR}]}_\text{feedback}
+\label{eq:MVAR}
+\end{equation}
+where $F[x_n(t),k_n]$ models the feedforward effects of input $x_n(t)$, $F[y(t),k_{AR}]$ models feedback effects, and $k_0$, the constant offset term, models the baseline firing probability.
+
+In past studies, feedforward effects were fixed to be either linear \citep{sandler14} or nonlinear \citep{sandler15,song07}, and feedback effects were fixed to be linear \citep{song07}.
+In this study, using the sparse group selection algorithm (see section \ref{MtE}), it is possible to determine whether particular inputs and feedback effects are best modeled by either a linear or nonlinear kernel (see Fig. \ref{graph}d).
+In this study, linear refers to convolution with a linear filter, $k^{(1)}(\tau)$, while nonlinear refers to convolution with a quadratic (2nd order Volterra) filter, $k^{(2)}(\tau_1,\tau_2)$ \citep{marm04,rajan13}.
+Mathematically, these operations are respectively defined by Eq.\ref{eq:FF}a,b:
+
+\begin{subequations}
+	\begin{align}
+	F[x(t),k^{(1)}(\tau)]=\sum_{\tau=0}^{M}k^{(1)}(\tau)x(t-\tau)\\
+	F[x(t),k^{(2)}(\tau_1,\tau_2)]=\sum_{\tau_1=1}^M\sum_{\tau_2=1}^Mk^{(2)}(\tau_1,\tau_2)x(t-\tau_1)x(t-\tau_2)
+	\end{align}
+	\label{eq:FF}
+\end{subequations}
+
+It was found that a memory of 100 ms was sufficient to model the dynamical effects of most neurons, and thus $M$ was fixed to 50 (100 ms/2 ms binwidth).
+In order to reduce the amount of model parameters and thereby increase parameter stability, we applied the Laguerre expansion technique (LET) to expand the feedforward and feedback filters over $L$ Laguerre basis functions \citep{marm04}.
+Based on previous studies, $L=6$ Laguerre basis functions were used \citep{sandler15clpp,song07}.
+Correspondingly, the amount of parameters in linear kernels was reduced from $M$ to $L$ (savings of 44 parameters) and in 2nd order kernels from to $M(M+1)/2$ to $L(L+1)/2$ (savings of 1254 parameters).
+The Laguerre parameter $\alpha$ was fixed at 0.542 to reflect this system memory \citep{marm04}.
+
+
+\subsubsection{Model Estimation \label{MtE}}
+Presumably, only a small portion of the total recorded neurons, $R$ causally influence any given neuron in the reconstructed neuronal network (RNN).
+This motivates the central task of identifying which neurons are effectively connected and which are not \citep{sporns09,fallani14}.
+Most methods which aim to estimate effective connectivity adopt a Granger causality approach whereby neuron A is effectively connected to neuron B only if it can help predict when neuron B will spike \citep{shoham10,brown11,sandler14,zhou14}.
+Here a penalized group regression approach was adopted which implicitly maximizes predictive power while improving computational efficiency over commonly used stepwise input selection methods \citep{song13sparse,song16sparse}.
+
+To proceed with penalized group regression, Eq. \ref{eq:GLM} is first recast in matrix form:
+\begin{equation}
+\bm{\hat{y}}=\Phi(\bm{\eta})=\Phi(\bm{Vc})
+\label{eq:mat}
+\end{equation}
+where $\bm{\hat{y}}$ and $\bm{\eta}$ are the vectors consisting of $\hat{y}(t)$ and $\eta(t)$ for $1\leq t \leq T$, $\bm{V}$ is the design matrix consisting of the convolved inputs and, for quadratic kernels, their cross products \citep{marm04}, and  $\bm{c}$ is the vector of model parameters to be estimated.
+In the \nn{} neuron RNN, there are 300,000 observations and 649 unknown parameters.
+% 1+N*(L+L(L+1)/2)
+
+The input parameters are divided into $2R$ groups consisting of 2 groups for every putative input: one group for the $L$ 1st order kernel parameters and another for the $L(L+1)/2$ 2nd order kernel parameters.
+The objective is now to find the optimal parameter vector, $\bm{c}^*$ which minimizes the cost function composed of the sum of the negative log-loss likelihood and the group regularization term, $P(\bm{c})$:
+\begin{equation}
+C(\bm{c};\bm{y},\bm{V})=\sum_{t=1}^T\Big(y(t)log\hat{y}(t)+(1-y(t))log(1-\hat{y}(t))\Big)+\sum_{g=1}^{2R}P(\bm{c_g})
+\label{eq:cost}
+\end{equation}
+where $\bm{c_g}$ is the group parameter vector containing only the parameters within group $g$.
+The function of the regularization term is to automatically set to 0 any parameter groups which are not found to significantly influence the output - thus implicitly estimating sparse functional connectivity.
+Here, the group minimax concave penalty (MCP) regularizer was chosen over the more conventional group LASSO because (1) it induces much less regularization based parameter shrinkages (biases) than the latter (2) it leads to much sparser solutions than the latter \citep{breheny15,zhang10}.
+The MCP regularizer is defined as:
+\begin{equation}
+P(\bm{c_g};\lambda,\gamma) =
+\begin{cases}
+\lambda\|\bm{c_g}\|-\frac{\|\bm{c_g}\|^2}{2\gamma}  & \|\bm{c_g}\| \leq \gamma\lambda \\
+\frac{1}{2}\gamma\lambda^2                          & \|\bm{c_g}\| >    \gamma\lambda
+\end{cases}
+\end{equation}
+where $\lambda$ determines the strength of regularization and $\gamma$, which was fixed at 3, determines the range over which MCP regularization is applied \citep{breheny15}.
+The group coordinate descent algorithm outlined in \citet{breheny15} was used to find $\bm{c}^*$.
+
+The optimal $\lambda$ value was selected using a warm-start regularization path approach using 90 logarithmically spaced $\lambda$ values.
+At each iteration, the Pearson correlation, $\rho$ was computed between the recorded spiketrain, $y(t)$, and the estimated spike probabilities, $\hat{y}(t)$, on a testing set consisting of 20\% of data randomly selected from $\bm{V}$.
+$\rho$ was used since (1) it was previously found to be a robust metric of similarity between spiketrains and continuous signals \citep{sandler14} and (2) it led to sparser solutions than the more commonly used cross-entropy error.
+Finally, the optimal $\lambda$ was selected as the largest $\lambda$ which achieved $>99\%$ of the max $\rho$ value.
+The regularization path can be seen in Fig. \ref{regpath}.
+
+Since any regularization will necessarily bias obtained parameters to varying degrees, all parameters of nonsparse groups were reestimated without sparse groups and without the regularization term.
+Note that due to computational efficiency and simplicity the initial search for $\lambda$ uses a logit link function \citep{breheny15}, while the final reestimation was done using the probit link of Eq. \ref{eq:GLM}.
+All computations were done in Matlab using custom code available upon request.
+A standard 3.2Ghz, 6-core desktop computer was able to estimate the \nn{}-neuron RNN in approximately 3 hours.
+
+\subsubsection{Model Validation \label{MtV}}
+To avoid overfitting, Monte Carlo style simulations were used to select those models which represent significant causal connections between input and output neurons and do not just fit noise \citep{sandler14}.
+The following procedure was used: in each run the real input was divided into 40 blocks and these blocks were randomly permuted with respect to the output.
+A model was then generated between the permuted inputs and the real output, and the Pearson correlation coefficient, $\rho_{i}$, was obtained as a metric of performance.
+$T=40$ such simulations were conducted for each output and a set of performance metrics, $\{\rho_{i}\}_{i}^{T}$, was obtained.
+Then, using Fisher's transformation, we tested the hypothesis, $H_{0}$, that $\rho$ was within the population of $\{\rho_{i}\}$.
+If this hypothesis could be rejected at the 99.99\% significance level, the model was deemed significant.
+The very conservative threshold ($P<.0001$) was used due to the large amount of comparisons being made.
+
+Two metrics were used to evaluate the goodness-of-fit of the estimated models by comparing the estimated continuous output, $\hat{y}(t)$ with the true binary output $y(t)$.
+Receiver Operator characteristic (ROC) curves plot the true positive rate against the false positive rate over the putative range of threshold values for the continuous output, $y(t)$ (Fig. \ref{regpath}c, \citet{zanos08}).
+The second metric used was the discrete KS test \citep{haslinger10,song13sparse} which compares the ISI distribution of the time rescaled probabilistic estimates with that of a homogenous Poisson process (Fig. \ref{regpath}d).
+All model assessment metrics were evaluated on the testing set.
 
 
 
