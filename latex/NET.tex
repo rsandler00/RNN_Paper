@@ -203,7 +203,7 @@ Note that due to the stochastic nature of the simulation and the neuronal baseli
 
 It was found that when the RNN simulation was allowed to run, it would spontaneously enter distinct network states for extended time periods.
 A clustering algorithm was used to identify the distinct stable dynamical states which emerged in the RNN output \citep{sasaki07,santaniello14}.
-To apply the clustering algorithm, the instantaneous MFR was first computed for each neuron using a 100 ms moving average filter.
+To apply the clustering algorithm, the instantaneous mean firing rate (MFR) was first computed for each neuron using a 100 ms moving average filter.
 5 principal components (PCs) were then extracted from the \nn{} instantaneous MFR vectors (Fig. \ref{seizure}c).
 These 5 PCs were then clustered using a standard k-means algorithm.
 Finally, for each state, dominant subnetworks of neurons were found by identifying the most significant neurons within the cluster (Fig. \ref{seizure}e).
@@ -223,7 +223,7 @@ Essentially, Eq. \ref{eq:simul} is modified to be:
 After seizure and control states were identified, a two-stage simulated annealing (SA) algorithm was used to identify the optimal spatiotemporal stimulation pattern, $s^*(n,t)$, which would most quickly and reliably move the network from the seizure state to the control state \citep{kirkpatrick83}.
 
 Multiple SA streams were run in parallel with 2 different mode of stimulation: periodic spiketrains (PTs) and random (Poisson) spiketrains (RTs).
-Each electrode could take on 8 possible values: \{OFF, 5 Hz, 20 Hz, 60 Hz, 100 Hz, 140 Hz, 180 Hz, 220 Hz\}.
+Each electrode could stimulate at 8 possible parameter values: \{OFF, 5 Hz, 20 Hz, 60 Hz, 100 Hz, 140 Hz, 180 Hz, 220 Hz\}.
 The electrode parameter determined the periodic stimulation frequency for PTs and the Poisson rate for RTs.
 Note that while for PTs, each parameter vector determines a unique spatiotemporal pattern, for RTs, each parameter vector only specifies the firing probability, and could correspond to a near infinite amount of different spatiotemporal patterns.
 To further reduce the amount of parameters, the electrodes for neurons which were functionally disconnected from the RNN were kept off.
@@ -240,11 +240,11 @@ Note that the lowest value the cost function could take was 0, and when it was $
 At each iteration the same stimulus was applied 3 times, with different random number seeds, and the average MFR ratio over the 3 runs was used as the SA cost function.
 A sample optimization path can be seen in Fig. \ref{SAresults}a.
 
-The SA algorithm was run twice using different definitions for neighboring states.
-In both rounds one electrode was chosen to randomly transition to a neighboring parameter value.
-In the first round, each frequency transitioned either to the upper or lower  frequency, or turned off with equal probability.
-If an already OFF electrode was selected, it transitioned to a random frequency.
-This was done to encourage sparsity and to identify the subset of electrodes to more carefully optimize in the second round.
+The SA algorithm was run in two consecutive rounds.
+In both rounds one electrode was chosen whose stimulation parameter value would randomly transition to a neighboring parameter value with equal probability; however, the definition of neighboring values was different for both rounds. 
+In the first round, the neighboring values were defined as the immediately higher frequency, the immediately lower frequency, or OFF.
+If the selected electrode was already OFF, all 7 of the frequency values were defined as neighbors (i.e. an OFF electrode would transition to a random frequency with equal probability).
+Allowing an electrode to turn off at each iteration encouraged sparsity and facilitated the identification of a subset of electrodes to more carefully optimize in the second round.
 In the second round, the OFF electrodes from the first round were not adjusted and the remaining electrodes transitioned either to the higher or lower frequency with equal probability.
 
 As the SA algorithm does not explicitly penalize nonsparse solutions, a stepwise pruning algorithm was used to remove superfluous electrodes.
@@ -324,7 +324,7 @@ Many neurons maintained their regular firing rate, and 2 neurons even reduced th
 These observations match the heterogeneity of neurons in recorded human seizures \citep{bower12}.
 %Furthermore, it was found that a much higher percentage (28/32, or $88\%$) of the epileptic subnetwork connections were bidirectional, supporting the notion that seizures emerge from heavily interconnected neuronal networks \citep{muldoon13}.
 Finally, the cluster state of the network was identified at each moment in time (Fig. \ref{seizure}b,bottom).
-As can be seen, this method is able to reliably detect the when the RNN enters and leaves the seizure state, thus effectively making it a prototype seizure detection algorithm \citep{mormann07,cook13,netoff15}.
+As can be seen, this method is able to reliably detect when the RNN enters and leaves the seizure state, thus effectively making it a prototype seizure detection algorithm \citep{mormann07,cook13,netoff15}.
 
 \begin{figure}[!ht]
 \centering
@@ -496,7 +496,7 @@ Using this testbed we gained many insights into neurostimulation and generated m
 It was observed that synchronized random (Poisson) stimulation provides slight benefits over periodic stimulation - an observation previously observed in the literature both experimentally and in computational models \citep{wyckhuys10,buffel14}.
 However, neither of these stimulus styles provided the benefits that random unsynchronized stimulation over multiple sites provided, suggesting the need to conduct more experiments exploiting multiple electrodes for stimulation \citep{cook13,van14}.
 Furthermore, it was observed that the optimal stimulation disproportionably targeted neurons outside of the epileptic subnetwork (i.e. focus).
-However, our most important finding was that optimized stimulation over multiple electrodes can significantly outperform any of the previously mentioned stimulus styles by exploiting each patient's unique network topology and dynamics.
+However, our most important finding was that optimized stimulation over multiple electrodes significantly outperformed any of the previously mentioned stimulus styles by exploiting the unique connectivity and dynamics of the RNN.
 Most importantly the optimal neurostimulation pattern identified here can be experimentally validated by applying it to the patient for which it was estimated on.
 This ability to experimentally validate our model predictions is lacking in many of the computational studies exploring neurostimulation.
 
@@ -538,8 +538,7 @@ As is currently done in the Neuropace \citep{NP}, the device will automatically 
 Then, this data and patient input will be used offline to analyze the success of yesterday's stimulation.
 Finally, a reinforcement learning paradigm \citep{gosavi14}, will be used to adjust parameters for the next day.
 While admittedly, such a task may seem incredibly difficult to realize we believe that the growth of machine learning in the last decade has made this more realistic to accomplish than ever before.
-Furthermore, this goal may be much more accessible than other promising treatments for epilepsy since the hardware is already there.
-All that needs to be done is to improve the software.
+Furthermore, since this approach is fundamentally an algorithmic one and does not heavily rely on specific electrode design and placement, it may be backwards compatible with current generation devices and significantly improve their efficacy.  
 
 \section*{Appendix: Dynamic Connectivity Model and Estimation}
 
@@ -580,13 +579,13 @@ Mathematically, these operations are respectively defined by Eq.\ref{eq:FF}a,b:
 
 It was found that a memory of 100 ms was sufficient to model the dynamical effects of most neurons, and thus $M$ was fixed to 50 (100 ms/2 ms binwidth).
 In order to reduce the amount of model parameters and thereby increase parameter stability, we applied the Laguerre expansion technique (LET) to expand the feedforward and feedback filters over $L$ Laguerre basis functions \citep{marm04}.
-Based on previous studies, $L=6$ Laguerre basis functions were used \citep{sandler15clpp,song07}.
+Based on previous studies, $L=6$ Laguerre basis functions were used \citep{sandler15clpp,song07,song09}.
 Correspondingly, the amount of parameters in linear kernels was reduced from $M$ to $L$ (savings of 44 parameters) and in 2nd order kernels from to $M(M+1)/2$ to $L(L+1)/2$ (savings of 1254 parameters).
 The Laguerre parameter $\alpha$ was fixed at 0.542 to reflect this system memory \citep{marm04}.
 
 
 \subsubsection{Model Estimation \label{MtE}}
-Presumably, only a small portion of the total recorded neurons, $R$ causally influence any given neuron in the reconstructed neuronal network (RNN).
+Presumably, only a small portion of the total recorded neurons, $R$, causally influence any given neuron in the reconstructed neuronal network (RNN).
 This motivates the central task of identifying which neurons are effectively connected and which are not \citep{sporns09,fallani14}.
 Most methods which aim to estimate effective connectivity adopt a Granger causality approach whereby neuron A is effectively connected to neuron B only if it can help predict when neuron B will spike \citep{shoham10,brown11,sandler14,zhou14}.
 Here a penalized group regression approach was adopted which implicitly maximizes predictive power while improving computational efficiency over commonly used stepwise input selection methods \citep{song13sparse,song16sparse}.
@@ -601,6 +600,7 @@ In the \nn{} neuron RNN, there are 300,000 observations and 649 unknown paramete
 % 1+N*(L+L(L+1)/2)
 
 The input parameters are divided into $2R$ groups consisting of 2 groups for every putative input: one group for the $L$ 1st order kernel parameters and another for the $L(L+1)/2$ 2nd order kernel parameters.
+Thus, for the $R=24$ recorded neurons, there were 48 groups: 24 1st order kernel groups and 24 2nd order kernel groups. 
 The objective is now to find the optimal parameter vector, $\bm{c}^*$ which minimizes the cost function composed of the sum of the negative log-loss likelihood and the group regularization term, $P(\bm{c})$:
 \begin{equation}
 C(\bm{c};\bm{y},\bm{V})=\sum_{t=1}^T\Big(y(t)log\hat{y}(t)+(1-y(t))log(1-\hat{y}(t))\Big)+\sum_{g=1}^{2R}P(\bm{c_g})
