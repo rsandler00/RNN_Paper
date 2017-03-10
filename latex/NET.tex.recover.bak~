@@ -125,7 +125,7 @@ For example, 42\% of patients did not respond to treatment in the same time peri
 
 Much research has shown that the efficacy of neurostimulation could be increased by carefully designing the temporal pattern of stimulation pulses.
 Frequency of stimulation \citep{chkhenkeli97,cordeiro13}, periodicity \autocite{wyckhuys10,buffel14}, and, in the case of multiple electrodes, synchronicity \citep{nelson11,van14} have all been shown to influence the success of neurostimulation.
-Furthermore, many have argued that stimulation must be custom tailored to the unique seizure topology and dynamics of each particular patient \citep{holt14,wendling13, taylor15}.
+Furthermore, many have argued that stimulation must be custom tailored to the unique seizure topology and dynamics of each particular patient \citep{holt14,wendling13,taylor15}.
 However, designing optimal neurostimulation patterns is extremely challenging in animal models and in human patients.
 Researchers cannot order seizures "on-demand" to test a wide range of stimulus patterns.
 Oftentimes, physicians must wait months before learning if a particular stimulus works.
@@ -434,10 +434,8 @@ Again, it can be seen that both types of synchronized stimulation failed to prov
 Once again, it can be seen that synchronized stimulation can only  temporarily move the network out of the seizure state.
 The mixed-frequency stimulus (MF) was only able to abate 5\% of seizures confirming that the optimized HFS settings were needed for successful abatement.
 The random unsynchronized (RM) stimulation, which applied the HFS to random electrodes, was able to abate 20\% of seizures showing that even random unsynchronized stimulation is, at least in this patient, superior to optimized synchronized stimulation.
-Finally, the optimal SA solution was able to abort \success{}\% of the seizures.
-In the four unsuccessful cases, it was found that while the stimulation did push the network temporarily out of the seizure state, the seizure restarted after the stimulation was turned off. 
-These results confirm the efficacy of the SA algorithm to identify optimal stimulation patterns.
-    
+Finally, the optimal SA solution was able to abort \success{}\% of the seizures, thereby confirming the efficacy of the SA algorithm to identify optimal stimulation patterns.
+
     \subsection{Responsive Neurostimulation}
 
 In order to assess the feasibility of model-based responsive neurostimulation, the optimal neurostimulation pattern was delivered in "real-time" as soon as a seizure was detected.
