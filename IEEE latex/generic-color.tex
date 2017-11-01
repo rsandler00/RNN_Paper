@@ -1,93 +1,46 @@
-\documentclass[11pt,a4paper,final]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
+\documentclass[journal,twoside,web]{ieeecolor}
+\usepackage{generic}
 
-\usepackage{bm}             %for bold math symbols
-\usepackage{latexsym}
-\usepackage{amssymb}
-%\usepackage[]{natbib}
-
-\usepackage{csquotes}
-\usepackage[backend=bibtex8,natbib=true,style=authoryear,labelnumber]{biblatex}
-\addbibresource{NET.bib}
-\addbibresource{biblio.bib}
-\DeclareFieldFormat{labelnumberwidth}{[#1]}
-\defbibenvironment{bibliography}  % from numeric.bbx
-  {\list
-    {\printtext[labelnumberwidth]{%
-      \printfield{prefixnumber}%
-      \printfield{labelnumber}}}
-    {\setlength{\labelwidth}{\labelnumberwidth}%
-        \setlength{\leftmargin}{\labelwidth}%
-        \setlength{\labelsep}{\biblabelsep}%
-        \addtolength{\leftmargin}{\labelsep}%
-        \setlength{\itemsep}{\bibitemsep}%
-        \setlength{\parsep}{\bibparsep}}%
-        \renewcommand*{\makelabel}[1]{\hss##1}}
-  {\endlist}
-  {\item}
-\DefineBibliographyStrings{english}{%
-  bibliography = {References},
-}
-
-\usepackage[font={small,it}]{caption}   %for image captions
-\usepackage[margin=1in]{geometry}
-\usepackage{hyperref}       %for linking in contents, refs, & images
-\usepackage{authblk}
-
-\usepackage{epsf}           %for .EPS graphics inclusion
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
 \usepackage{graphicx}
-\usepackage[outdir=../figures/]{epstopdf}
-
-\usepackage[font={small,it}]{caption}   %for image captions
-\graphicspath{{../figures/}}
-\RequirePackage{amsopn}
-%\RequirePackage{affronts}
-\RequirePackage{amsmath}
-\usepackage{lineno}
-
-
-
-\usepackage{abstract} % Allows abstract customization
-\renewcommand{\abstracttextfont}{\normalfont\small\itshape} %Set the abstract itself to small italic text
-
-\title{\vspace{-30mm}\fontsize{14pt}{1pt}\textbf{
-Designing Patient-Specific Optimal Neurostimulation Patterns for Seizure Suppression}} % Article title
-
-\author[1,2]{Roman A. Sandler     \thanks{Corresponding Author: rsandler00@gmail.com}}
-\author[3]{Kunling Geng         }   %   kgeng@usc.edu
-\author[3]{Dong Song            }   %   dsong@usc.edu
-\author[4]{Robert E. Hampson    }   %   rhampson@wakehealth.edu
-\author[5]{Mark R. Witcher      }   %   mark.russell.witcher@emory.edu
-\author[4]{Sam A. Deadwyler     }   %   sdeadwyl@wakehealth.edu
-\author[3]{Theodore W. Berger   }   %   berger@usc.edu
-\author[3]{Vasilis Z. Marmarelis}   %   vzm@usc.edu
-\affil[1]{Department of Physics \& Astronomy, University of California, Los Angeles, Los Angeles, CA, USA}
-\affil[2]{W. M. Keck Center for Neurophysics, University of California, Los Angeles, Los Angeles, CA, USA}
-\affil[3]{Department of Biomedical Engineering, University of Southern California, Los Angeles, CA, USA}    
-\affil[4]{Department of Physiology \& Pharmacology, Wake Forest University, Winston-Salem, NC, USA} %27106
-\affil[5]{Department of Neurosurgery, Wake Forest University, Winston-Salem, NC, USA}               
-\renewcommand\Authands{ \& }
-
-\linenumbers
-\begin{document}
+\usepackage{textcomp}
 
 \newcommand{\nn}{24}    %total amount of neurons
 \newcommand{\fit}{170}    %optimal FIT freq
 \newcommand{\rit}{130}    %optimal RIT freq
 \newcommand{\len}{250}   %length of applied DBS in ms
 \newcommand{\success}{92} % % of seizures abated by optimal stim
-
 \newcommand{\sig}{18}   % # of significnat models
 \newcommand{\sparse}{22.83} % % of significnat connections
 
-%\keywords{epilepsy, DBS, neurostimulation, seizure, graph theory, hippocampus, GLM}
-%\reviewers{Uri T Eden, tzvi@bu.edu Theoden Netoff tnetoff@umn.edu  Wilson Truccolo Wilson_Truccolo@brown.edu Fabrice Wendling  fabrice.wendling@univ-rennes1.fr, 
-%Christopher DiMattina - Florida Gulf Coast Univ. - cdimattina@fgcu.edu 
-%ShiNung Ching - Wash U St. Luis - shinung@ese.wustl.edu}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\markboth{\journalname, VOL. XX, NO. XX, XXXX 2017}
+{Author \MakeLowercase{\textit{et al.}}: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS (February 2017)}
+\usepackage[noadjust]{cite} 
 
+\begin{document}
+\title{Designing Patient-Specific Optimal Neurostimulation Patterns for Seizure Suppression}
+\author{First A. Author, \IEEEmembership{Fellow, IEEE}, Second B. Author, and Third C. Author, Jr., \IEEEmembership{Member, IEEE}
+\thanks{This paragraph of the first footnote will contain the date on 
+which you submitted your paper for review. It will also contain support 
+information, including sponsor and financial support acknowledgment. For 
+example, ``This work was supported in part by the U.S. Department of 
+Commerce under Grant BS123456.'' }
+\thanks{The next few paragraphs should contain 
+the authors' current affiliations, including current address and e-mail. For 
+example, F. A. Author is with the National Institute of Standards and 
+Technology, Boulder, CO 80305 USA (e-mail: author@boulder.nist.gov). }
+\thanks{S. B. Author, Jr., was with Rice University, Houston, TX 77005 USA. He is 
+now with the Department of Physics, Colorado State University, Fort Collins, 
+CO 80523 USA (e-mail: author@lamar.colostate.edu).}
+\thanks{T. C. Author is with 
+the Electrical Engineering Department, University of Colorado, Boulder, CO 
+80309 USA, on leave from the National Research Institute for Metals, 
+Tsukuba, Japan (e-mail: author@nrim.go.jp).}}
 
-\maketitle % Insert title
+\maketitle
 
 \begin{abstract}
 Neurostimulation is a promising therapy for abating epileptic seizures.
@@ -102,41 +55,36 @@ Finally, in a fully responsive, or "closed-loop" neurostimulation paradigm, the 
 We propose that the framework presented here for algorithmically identifying patient-specific neurostimulation patterns can greatly increase the efficacy of neurostimulation devices for seizures.
 \end{abstract}
 
+\begin{IEEEkeywords}
+epilepsy, DBS, neurostimulation, seizure, graph theory, hippocampus, GLM
+\end{IEEEkeywords}
 
-%\section*{Significance Statement}
-%Responsive Neurostimulation devices are quickly becoming a popular method for treating intractable epilepsy.
-%Nonetheless, such devices have a large nonresponder rate and only diminish seizure rate rather than completely abolish them.
-%A major technological limitation of these devices is that due to the huge parameter space and lack of immediate feedback, it is extremely difficult to %identify optimal stimulation parameters such as stimulus pattern and frequency.
-%The following work uses recorded human hippocampal data to develop an in-silico testbed for identifying these parameters in a patient specific manner.
-%Implementing such algorithms in responsive neurostimulation devices may greatly increase their efficacy.
-
-
-\section{Introduction \label{intro}}
-
-Epilepsy is a neurological disorder characterized by chronic seizures which affects 1-2\% of the US population \citep{begley00}.
+\section{Introduction}
+\label{sec:introduction}
+Epilepsy is a neurological disorder characterized by chronic seizures which affects 1-2\% of the US population \cite{begley00}.
 Standard treatments include antiepileptic drugs and resective surgery.
 However, both have major drawbacks.
-Up to ~30\% of patients do not respond to drugs; of those who do, many suffer serious side-effects such as nausea, dizziness, drowsiness, and weight-gain \citep{brodie96}.
-Furthermore, Surgery is not an option for many patients, and when it is, there is a large remission rate within 1-2 years  \citep{engel03}.
+Up to ~30\% of patients do not respond to drugs; of those who do, many suffer serious side-effects such as nausea, dizziness, drowsiness, and weight-gain \cite{brodie96}.
+Furthermore, Surgery is not an option for many patients, and when it is, there is a large remission rate within 1-2 years  \cite{engel03}.
 
 In recent years, neurostimulation has emerged as a promising approach to reducing seizures.
-In 2013, the FDA approved the Neuropace RNS system, the first device for responsive cortical neurostimulation for epilepsy \citep{sun08}.
+In 2013, the FDA approved the Neuropace RNS system, the first device for responsive cortical neurostimulation for epilepsy \cite{sun08}.
 However, thus far results have shown that neurostimulation provides only palliative relief from seizures rather than a full cure.
-For example, the Neuropace device has provided a 60\% decrease in median seizure after three years  \citep{bergey15,morrell16}.
+For example, the Neuropace device has provided a 60\% decrease in median seizure after three years  \cite{bergey15,morrell16}.
 While these results are impressive, especially considering they were obtained on the most difficult patient category, they are far from perfect.
-For example, 42\% of patients did not respond to treatment in the same time period, and no patients were completely seizure free \citep{bergey15}.
+For example, 42\% of patients did not respond to treatment in the same time period, and no patients were completely seizure free \cite{bergey15}.
 
 Previous research has shown that the efficacy of neurostimulation could be increased by carefully designing the temporal pattern of stimulation pulses.
-Frequency of stimulation \citep{chkhenkeli97,cordeiro13}, periodicity \autocite{wyckhuys10,buffel14}, and, in the case of multiple electrodes, synchronicity \citep{nelson11,van14} have all been shown to influence the success of neurostimulation.
-Furthermore, many have argued that stimulation must be custom tailored to the unique seizure topology and dynamics of each particular patient \citep{holt14,wendling13, taylor15}.
+Frequency of stimulation \cite{chkhenkeli97,cordeiro13}, periodicity \cite{wyckhuys10,buffel14}, and, in the case of multiple electrodes, synchronicity \cite{nelson11,van14} have all been shown to influence the success of neurostimulation.
+Furthermore, many have argued that stimulation must be custom tailored to the unique seizure topology and dynamics of each particular patient \cite{holt14,wendling13, taylor15}.
 However, designing optimal neurostimulation patterns is extremely challenging in animal models and in human patients.
 Researchers cannot order seizures "on-demand" to test a wide range of stimulus patterns.
 Oftentimes, physicians must wait months before learning if a particular stimulus works.
 Furthermore, researchers can only stimulate each seizure once, and cannot go "back in time" to see how the seizure would have evolved with no stimulation or with different stimulation.
 Due to these difficulties the Neuropace device recommends that physicians keep stimulus frequency fixed at 200 Hz and only if that fails to adjust the stimulus current.
-Nonetheless, there is an increasing feeling in the field that a more principled approach to stimulation design is needed \citep{netoff15}.
+Nonetheless, there is an increasing feeling in the field that a more principled approach to stimulation design is needed \cite{netoff15}.
 
-In past work we have developed a closed-loop model of the rodent hippocampus and used this model to identify the optimal frequency of stimulation needed to reduce network output \citep{sandler15clpp}.
+In past work we have developed a closed-loop model of the rodent hippocampus and used this model to identify the optimal frequency of stimulation needed to reduce network output \cite{sandler15clpp}.
 However, the above model was limited to 2 reciprocally connected neurons and thus important features of epilepsy such as population synchrony could not be studied.
 Here we use \nn{} neurons recorded from human hippocampus to reconstruct the patient's distinct neuronal connectivity and causal dynamics.
 Spontaneous seizure activity is then initiated in the reconstructed neuronal network (RNN).
@@ -164,15 +112,15 @@ Spikes were detected and sorted offline with a 500-5,000 Hz bandpass filter and 
 \subsection{Dynamic Connectivity Model Structure and Estimation}
 
 The aim of the RNN is to use the observed spiking activity to reconstruct in-silico the distinct effective connectivity of the \nn{} recorded neurons.
-In other words, for each neuron the RNN attempts to answer which of the other $R-1$ neurons causally influence it, and what is the dynamical nature of that influence. The methods used here are similar to those of \citet{song16sparse}.
+In other words, for each neuron the RNN attempts to answer which of the other $R-1$ neurons causally influence it, and what is the dynamical nature of that influence. The methods used here are similar to those of \cite{song16sparse}.
 
 %-TODO: check wording here. Does it need a better transition?
 
 The firing probability of each neuron at time $t$, $\hat{y}(t)$, was determined by its own past spiking activity and the past and present spiking activity of all other $N$ connected CA3 neurons, $\{x_n(t)\}$ within a finite memory of $M=100$ ms and modeled using a generalized linear model (GLM) with a probit link (see Eq. \ref{eq:GLM}-\ref{eq:FF}).
 Each feedforward/feedback filter is either linear or quadratic-nonlinear (2nd order Volterra)  (see Eq. \ref{eq:FF}), as determined by the group regularization algorithm used for model fitting.
-The feedback component, characterized by the filter $k_{AR}(\tau)$, can be intuitively thought of as the afterhyperpotential (AHP) \citep{spruston07} and encapsulates intracellular processes such as the absolute and relative refractory period, slow potassium conductances, and $I_h$ conductances.
+The feedback component, characterized by the filter $k_{AR}(\tau)$, can be intuitively thought of as the afterhyperpotential (AHP) \cite{spruston07} and encapsulates intracellular processes such as the absolute and relative refractory period, slow potassium conductances, and $I_h$ conductances.
 The interneuronal components, characterized by the set of input-output filters $\{k_n\}$, can be intuited as the waveform of the EPSP from the $n^{th}$ input neuron onto the output neuron.
-A nonlinear filter is potentially included to describe interactions between two input pulses, such as paired pulse facilitation and depression \citep{song09par1,sandler15}.
+A nonlinear filter is potentially included to describe interactions between two input pulses, such as paired pulse facilitation and depression \cite{song09par1,sandler15}.
 More detailed information on model structure can be found in the appendix. 
 It should be noted that the model is a "blackbox", or entirely based on data, and thus makes no \textit{a priori} assumptions on the nature of the feedback and interneuronal dynamics.
 Therefore, the estimated filters include the previously listed phenomena as well as more indirect/nonlinear phenomena such as dendritic integration, spike generation, active membrane conductances, and feedforward interneuronal inhibition (thereby allowing the filters between two pyramidal cells to be inhibitory).
@@ -194,7 +142,7 @@ For each time bin $t$, the output of the $n^{th}$ neuron, $\tilde{y}_n(t)$ is mo
 \end{equation}
 Here $\Phi()$ is the probit link function (Eq. \ref{eq:GLM}), $\tilde{\eta}_n(t)$ is the linearly weighted combination of past and present spiking activity for neuron $n$ (Eq. \ref{eq:MVAR}), and $u$ is a standard uniform random number.
 Thus the neuron spikes when the generated randon number, $u$, is greater than the neuron's instantaneous probability of firing, $\Phi(\tilde{\eta}_n(t),\sigma)$.
-Equivalently, the neuronal output can be viewed as being generated by a prethreshold signal, composed of the sum of a deterministic component (Eq. \ref{eq:FF}) and Gaussian white noise (GWN) of variance $\sigma^2$, followed by a fixed threshold of 0 which is implicit in probit link formulation \citep{berger12}:
+Equivalently, the neuronal output can be viewed as being generated by a prethreshold signal, composed of the sum of a deterministic component (Eq. \ref{eq:FF}) and Gaussian white noise (GWN) of variance $\sigma^2$, followed by a fixed threshold of 0 which is implicit in probit link formulation \cite{berger12}:
 \begin{equation}
 \tilde{y}_n(t) =
 \begin{cases}
@@ -206,7 +154,7 @@ Equivalently, the neuronal output can be viewed as being generated by a prethres
 Note that due to the stochastic nature of the simulation and the neuronal baseline firing rates, which are determined by the $k_0$ coefficients (see appendix), the model will generate spiking activity spontaneously, even without any explicit exogenous input. 
 
 It was found that when the RNN simulation was allowed to run, it would spontaneously enter distinct network states for extended time periods.
-A clustering algorithm was used to identify the distinct stable dynamical states which emerged in the RNN output \citep{sasaki07,santaniello14}.
+A clustering algorithm was used to identify the distinct stable dynamical states which emerged in the RNN output \cite{sasaki07,santaniello14}.
 To apply the clustering algorithm, the instantaneous mean firing rate (MFR) was first computed for each neuron using a 100 ms moving average filter.
 5 principal components (PCs) were then extracted from the \nn{} instantaneous MFR vectors (Fig. \ref{seizure}c).
 These 5 PCs were then clustered using a standard k-means algorithm.
@@ -225,7 +173,7 @@ Essentially, Eq. \ref{eq:simul} is modified to be:
 \end{equation}
 Intuitively, this model of stimulation allows electrodes to deterministically elicit spikes at precise times and thereby 'override' the neurons' normal probabilistic mode of spiking defined in Eq. \ref{eq:simul}. 
 
-After seizure and control states were identified, a two-stage simulated annealing (SA) algorithm was used to identify the optimal spatiotemporal stimulation pattern, $s^*(n,t)$, which would most quickly and reliably move the network from the seizure state to the control state \citep{kirkpatrick83}.
+After seizure and control states were identified, a two-stage simulated annealing (SA) algorithm was used to identify the optimal spatiotemporal stimulation pattern, $s^*(n,t)$, which would most quickly and reliably move the network from the seizure state to the control state \cite{kirkpatrick83}.
 Multiple SA streams were run in parallel with 2 different mode of stimulation: periodic spiketrains (PTs) and random (Poisson) spiketrains (RTs).
 Each electrode could stimulate at 8 possible parameter values: \{OFF, 5 Hz, 20 Hz, 60 Hz, 100 Hz, 140 Hz, 180 Hz, 220 Hz\}.
 The electrode parameter determined the periodic stimulation frequency for PTs and the Poisson rate for RTs.
@@ -234,7 +182,7 @@ To further reduce the amount of parameters, the electrodes for neurons which wer
 
 The SA algorithm was run on a standard exponential cooling schedule with 120 global iterations with temperatures logarithmically spaced between $T_{start}=10$ and $T_{end}=.01$.
 Each global iteration had 80 local iterations where the temperature was kept constant.
-At the end of each global iteration, the parameter was reset to the minimum of the global iteration \citep{henderson03}.
+At the end of each global iteration, the parameter was reset to the minimum of the global iteration \cite{henderson03}.
 
 In every SA iteration, the network was initialized in the seizure state.
 The neurostimulation pattern, $s(n,t)$, was designed based on the current parameter values, and applied for \len ms.
@@ -256,6 +204,7 @@ During each cycle, the algorithm individually iterated though all $E$ "on" elect
 At the end of each cycle the electrode which caused the greatest decrease in the cost function was turned off, and the algorithm would continue to the next cycle and consider only the $E-1$ remaining electrodes.
 If no electrodes were found whose removal decreased the cost function, than the pruning algorithm stopped and no further electrodes were turned off.
 
+
 \section{Results \label{results}}
 
     \subsection{Reconstructed Neuronal Network}
@@ -271,9 +220,9 @@ Further metrics quantifying the predictive power of the estimated models, includ
 The remaining 6 neurons were functionally isolated from the network: they neither influenced any other neurons or were influenced by them.
 Of the significant connections, a much larger number than expected were found to be bidirectionally connected (71.43\%, $P<.001$. Fig. \ref{graph}b).
 All neurons had an average of 5.3 inputs and outputs.
-Furthermore, there was a positive correlation between number of inputs and number of outputs, suggesting a small-world network (Fig. \ref{graph}c; \citet{sporns09,fallani14}).
+Furthermore, there was a positive correlation between number of inputs and number of outputs, suggesting a small-world network (Fig. \ref{graph}c; \cite{sporns09,fallani14}).
 
-\begin{figure}[!ht]
+\begin{figure*}[!ht]
 	\centering
 	\includegraphics[width=160mm]{graph}
 	\caption[Graph \& Example System]{
@@ -282,17 +231,17 @@ Furthermore, there was a positive correlation between number of inputs and numbe
 		(C) Positive correlation of the \# of outputs a given neuron has vs the \# of inputs it has. Regression data is given in the figure for best fit line. Red lines shown means of x and y data.
 		(D) Sample three input system of neuron \#22 (enclosed in red box in A). Input spiketrains are convolved with either a linear or quadratic filter and then summed with Gaussian noise and feedback effects to generate the prethreshold sum. They are then put through a threshold of 0 to generate a binary output.}
 	\label{graph}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[!ht]
+\begin{figure*}[!ht]
 	\centering
 	\includegraphics[width=170mm]{regpath}
 	\caption[Regularization Path]{
 		(A,B) Plots show \# of parameters selected (A) and testing set correlation, $\rho$, (B) for different values of the regularization parameter, $\lambda$. Each plot shows a line for each of the \nn{} neurons in the RNN. Notice that as $1/\lambda$ is increased (and thus regularization is weakened), more parameters enter the model until we have a full model. Dots show the optimal $\lambda$ selected for each neuron.
 		(C) ROC plots for each of the \nn{} neurons, showing model predictive power. Notice that each of the lines are above the dashed blue line (TPR=FPR) which represents a model with no predictive power.
-		(D) vertical KS Plots for each of the \nn{} neurons, along with normalized 95\% confidence bounds \citep{song13sparse}. As can be seen, most models fall within the bounds.}
+		(D) vertical KS Plots for each of the \nn{} neurons, along with normalized 95\% confidence bounds \cite{song13sparse}. As can be seen, most models fall within the bounds.}
 	\label{regpath}
-\end{figure}
+\end{figure*}
 
 A sample system is shown in Fig. \ref{graph}d for neuron 22 which is causally influenced by neurons $\{2,8,14\}$.
 Several features of the system can be interpreted from the filters.
@@ -300,35 +249,35 @@ Note that neurons 8 and 14 are connected linearly while neuron 2 is connected wi
 Also note that neuron 14 exerts an entirely excitatory influence on neuron 22, while the effect of neuron 8 oscillates between excitation and inhibition.
 Finally, the feedback kernel is composed of initial refractory inhibition, followed by oscillatory bursting activity.
 Interestingly it oscillates at 5 Hz, which is in the low theta range. 
-This oscillation has been extensively implicated in memory tasks in the hippocampus \citep{buzsaki06,sandler14}.
+This oscillation has been extensively implicated in memory tasks in the hippocampus \cite{buzsaki06,sandler14}.
 
     \subsection{Seizure Initiation and Classification}
 
-Once the effective connectivity and dynamics were estimated, the RNN was allowed to run without perturbation and stochastically generate simulated hippocampal CA3 activity, $\{\tilde{y}_n(t)\}$ for all \nn{} neurons \citep{pillow08}.
+Once the effective connectivity and dynamics were estimated, the RNN was allowed to run without perturbation and stochastically generate simulated hippocampal CA3 activity, $\{\tilde{y}_n(t)\}$ for all \nn{} neurons \cite{pillow08}.
 As expected the RNN, which was estimated from normal (nonictal) spiking activity of a TLE patient, generated physiological firing rates with very low levels of synchronization (Fig. \ref{seizure}a).
 In order to induce seizure dynamics, two modification were performed.
 First, the 'in-silico' neuronal membrane potential was raised by increasing the baseline firing probability parameter $k_0$ (see Eq. \ref{eq:MVAR}).
-This mimics the common practice of inducing seizures experimentally by pharmacologically raising the membrane baseline potential \citep{fricker99,avoli02}.
+This mimics the common practice of inducing seizures experimentally by pharmacologically raising the membrane baseline potential \cite{fricker99,avoli02}.
 Second, the level of stochastic noise driving the network was reduced by lowering $\sigma$.
 To intuitively understand this modification, note that in the extreme case of $\sigma=0$, the network is entirely deterministic and generates either no activity at all oscillates in a fixed limit cycle;
 alternatively, in the other extreme of $\sigma=\infty$, the network generates completely random (Poisson) firing.
 Thus, intuitively, lowering sigma increases population control over the neurons and tends to promote the persistent oscillations which characterize seizures.
-It was found that raising the baseline by $B=30\%$ relative to the threshold and lowering $\sigma$ to .725 was sufficient to generate spontaneously emerging realistic seizures lasting anywhere between a few seconds to over a minute as seen in real human data (Fig. \ref{seizure}b; \citet{bower12,truccolo14}).	
+It was found that raising the baseline by $B=30\%$ relative to the threshold and lowering $\sigma$ to .725 was sufficient to generate spontaneously emerging realistic seizures lasting anywhere between a few seconds to over a minute as seen in real human data (Fig. \ref{seizure}b; \cite{bower12,truccolo14}).	
 
 In order to gain more intuition about the network dynamics, principal components (PCs) were extracted from the network activity based on instantaneous MFR.
 Fig. \ref{seizure}c shows the network trajectory through time in PC space.
-A clustering algorithm was used to identify the distinct stable dynamical states which emerged in the RNN spiking activity (Fig. \ref{seizure}d-f; \citet{sasaki07,santaniello14}).
+A clustering algorithm was used to identify the distinct stable dynamical states which emerged in the RNN spiking activity (Fig. \ref{seizure}d-f; \cite{sasaki07,santaniello14}).
 As can be seen, under the selected $\{\sigma,B\}$ parameters, the RNN jumped between only 2 stable states: normal and seizure.
-%However, it should be noted that under different $\{\sigma,B\}$ parameters, occasionally $>2$ stable states emerged \citep{mazzucato15}.	
+%However, it should be noted that under different $\{\sigma,B\}$ parameters, occasionally $>2$ stable states emerged \cite{mazzucato15}.	
 The dominant subnetwork of neurons which comprised the seizure cluster is shown in Fig. \ref{seizure}e.
 These 6 neurons are responsible for most of the spiking activity within the seizure state, and their reciprocal connectivity is presumably responsible for maintaining the seizure dynamics.
 Many neurons maintained their regular firing rate, and 2 neurons even reduced their firing rate.
-These observations match the heterogeneity of neurons in recorded human seizures \citep{bower12}.
-%Furthermore, it was found that a much higher percentage (28/32, or $88\%$) of the epileptic subnetwork connections were bidirectional, supporting the notion that seizures emerge from heavily interconnected neuronal networks \citep{muldoon13}.
+These observations match the heterogeneity of neurons in recorded human seizures \cite{bower12}.
+%Furthermore, it was found that a much higher percentage (28/32, or $88\%$) of the epileptic subnetwork connections were bidirectional, supporting the notion that seizures emerge from heavily interconnected neuronal networks \cite{muldoon13}.
 Finally, the cluster state of the network was identified at each moment in time (Fig. \ref{seizure}b,bottom).
-As can be seen, this method is able to reliably detect when the RNN enters and leaves the seizure state, thus  making it a simple seizure detection algorithm \citep{mormann07,cook13,netoff15}.
+As can be seen, this method is able to reliably detect when the RNN enters and leaves the seizure state, thus  making it a simple seizure detection algorithm \cite{mormann07,cook13,netoff15}.
 
-\begin{figure}[!ht]
+\begin{figure*}[!ht]
 \centering
 \includegraphics[width=180mm]{seizure}
 \caption[Seizure Induction]{
@@ -341,13 +290,13 @@ As can be seen, this method is able to reliably detect when the RNN enters and l
 	(F) Additional metrics characterizing the two clusters, including proportion of time, MFR, and Fano factor in each state. Note that MFR was scaled to have a maximum of 1 to promote visualization.
 }
 \label{seizure}
-\end{figure}
+\end{figure*}
 
     \subsection{Identifying Optimal Neurostimulation for Seizure Abatement}
 
 Once the effective connectivity of the human TLE patient was estimated, and realistic seizure activity simulated, we aimed to identify a spatiotemporal pattern of electric stimulation which could reliably and efficiently induce the network to leave the seizure state.
 At first glance, this is a paradoxical task: we want to lower network spiking activity by applying external spikes to the network.
-However, several experimental studies have shown that this could be accomplished using precisely designed patterned stimulation \citep{durand01,heck14}.
+However, several experimental studies have shown that this could be accomplished using precisely designed patterned stimulation \cite{durand01,heck14}.
 
 Our working assumption was that there exist \nn{} electrodes which could each stimulate a single neuron without affecting any of the others.
 A "pulse" in an electrode at a given time would elicit a single contemporaneous spike in the associated neuron at that time.
@@ -364,7 +313,7 @@ The path of the simulated annealing algorithm is shown in Fig. \ref{SAresults}a.
 The optimal stimulation parameters and spatiotemporal pattern are shown in Fig. \ref{SAresults}c,d.
 It was found that only 4/\nn{} (~17\%) electrodes needed to be turned on.
 Of those, 2 electrodes had frequencies of 180 Hz, and the remaining two had frequencies of 100 Hz and 220 Hz; furthermore, it was found that periodic stimulation led to better results than Poisson stimulation (Fig. \ref{SAresults}b).
-This confirms experimental evidence showing that high frequency stimulation (HFS) is optimal for abating seizures \citep{durand01}.
+This confirms experimental evidence showing that high frequency stimulation (HFS) is optimal for abating seizures \cite{durand01}.
 Interestingly, 2 of the selected electrodes (22 and 24) stimulated the epileptic subnetwork (Fig. \ref{seizure}e), while the other two stimulated outside the subnetwork, suggesting that direct stimulation of the seizure focus itself may not be the most effective route.
 
 By initializing the RNN simulations under identical seizure conditions and using identical sequences of random numbers, one could compare how a seizure would have evolved under different types of applied stimulation.
@@ -372,9 +321,9 @@ Fig. \ref{SAresults}e,f show how a network initialized in the seizure state evol
 Additionally, Fig. \ref{SAresults}g,h shows the population MFR and PC trajectory in both simulations.
 As can be seen from these figures, the optimal stimulation is able induce the network to leave the seizure state in under \len{} ms, and more importantly the network stays in the nonictal state after the \len{} ms stimulation ended.
 
-\begin{figure}[!ht]
+\begin{figure*}[!ht]
 	\centering
-	\includegraphics[width=160mm]{SAresults}
+	\includegraphics[width=160mm]{SAresults.jpg}
 	\caption[Simulated Annealing Results]{
 		(A) Evolution of electrode parameters during the second round of simulated annealing. Notice that some electrodes are consistently kept off as they were not selected during the first round. White dots show the relative cost function value for each iteration. 
 		(B) Final costs for 6 parallel runs of the SA algorithm using different modes of stimulation: PT,RNB, and RT. Vertical red line shows that the best results were achieved for PT stimulation and these parameters were the selected ones.	
@@ -384,11 +333,11 @@ As can be seen from these figures, the optimal stimulation is able induce the ne
 		(G) Distance from the seizure state cluster center is shown for both control and stimulation runs. Notice that stimulation induces the network to rapidly move away from the seizure cluster center. This can be seen more clearly in (H) which shows the trajectory of both runs in PC space (see Fig. \ref{seizure}c.
 		Red lines in (D-G) indicate the beginning and end of stimulation.}
 	\label{SAresults}
-\end{figure}
+\end{figure*}
 
 Our working premise has assumed that precisely designed independent, or unsynchronized, stimulation across multiple sites could improve responsive neurostimulation.
-While some work has supported this hypothesis \citep{nelson11}, most DBS studies, due to either experimental or theoretical consideration \citep{durand01}, have only looked at single site stimulation where an electric pulse presumably stimulates a large population of neurons simultaneously \citep{sun14}.
-Furthermore, most studies have used periodic spiketrains (PTs) rather than random spiketrains (RTs) despite a few studies indicating that RTs may be superior to PTs (Fig. \ref{MC}a, \citet{wyckhuys10,van14}).
+While some work has supported this hypothesis \cite{nelson11}, most DBS studies, due to either experimental or theoretical consideration \cite{durand01}, have only looked at single site stimulation where an electric pulse presumably stimulates a large population of neurons simultaneously \cite{sun14}.
+Furthermore, most studies have used periodic spiketrains (PTs) rather than random spiketrains (RTs) despite a few studies indicating that RTs may be superior to PTs (Fig. \ref{MC}a, \cite{wyckhuys10,van14}).
 In order to compare synchronized PT and RT stimulation with independent multi-electrode stimulation we first attempted to find the optimal stimulation frequency/rate for PT/RT stimulation.
 This was done by delivering identical patterns of stimulation to all \nn{} neurons simultaneously for \len{} ms.
 The optimal frequency was found by sweeping from 5 Hz to 220 Hz in 50 Monte-Carlo style trials.
@@ -398,9 +347,9 @@ Neither PTs or RTs, of any frequency, were found to significantly help in ending
 In fact, at many frequencies they actually exacerbated the length of seizures.
 Interestingly however, PTs and RTs at high frequencies ($>180$ Hz) did temporarily move the network away from the seizure zone (Fig. \ref{FITstim}).
 However, as soon as the stimulation was turned off, the seizure continued.
-It should be emphasized however, that these results cannot be generalized beyond the particular patient from whom this data was estimated, and high frequency stimulation has been shown to be efficacious in a large number of patients \citep{heck14}.
+It should be emphasized however, that these results cannot be generalized beyond the particular patient from whom this data was estimated, and high frequency stimulation has been shown to be efficacious in a large number of patients \cite{heck14}.
 
-\begin{figure}[!ht]
+\begin{figure*}[!ht]
 	\centering
 	\includegraphics[width=180mm]{MC}
 	\caption[Simulated Annealing Monte Carlo Analysis]{
@@ -410,9 +359,10 @@ It should be emphasized however, that these results cannot be generalized beyond
 		(D) \% of seizures aborted by various stimulation modalities.
 	}
 	\label{MC}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[!ht]
+
+\begin{figure*}[!ht]
 	\centering
 	\includegraphics[width=180mm]{FITstim}
 	\caption[Periodic Stimulation]{
@@ -420,7 +370,7 @@ It should be emphasized however, that these results cannot be generalized beyond
 		(B) Network output. Notice that the seizures temporarily stops during stimulation; however, the seizure returns almost immediately once stimulation is turned off.
 		(C) The same plot in principal-component space.}
 	\label{FITstim}
-\end{figure}
+\end{figure*}
 
 Finally, the optimal stimulation was compared with other unsynchronized multi-electrode stimulation patterns to insure that the acquired simulated annealing solution is indeed a significant local, if not global, minima.
 In each simulation, the optimal stimulation was applied along with no stimulation (NON), and various control stimulation patterns including:
@@ -443,7 +393,7 @@ In order to assess the feasibility of model-based responsive neurostimulation, t
 Causal clustering allowed real-time seizure detection by identifying when the network shifted from the normal to seizure cluster (Fig. \ref{seizure}).
 A simple control strategy was employed whereby the optimal \len{} ms neurostimulation pattern (Fig. \ref{SAresults}d) was applied as soon as the network entered the seizure state.
 At the end of the stimulation, if the network was still in the seizure state, another round of stimulation was immediately applied; otherwise, the stimulation therapy ended.
-Notably, this is the same control algorithm currently used in the Neuropace RNS$\textsuperscript{\textregistered}$ device \citep{NP}.
+Notably, this is the same control algorithm currently used in the Neuropace RNS$\textsuperscript{\textregistered}$ device \cite{NP}.
 (However, it should be noted that the Neuropace broadens our definition of 'seizure state' to include interictal activity, with the hope that stimulation will prevent the network from ever entering a full seizure.)
 
 Two simulations were performed with and without responsive neurostimulation (Fig. \ref{RS}).
@@ -453,19 +403,19 @@ The responsive neurostimulation algorithm was able to detect all these seizures 
 Furthermore, in most cases a single round of stimulation was able to prevent the network from going into a prolonged seizure state.
 In one case, at 72 seconds, the first stimulus was unsuccessful eliminating the seizure, so a second stimulus was applied thereafter and successfully stopped the seizure.
 
-\begin{figure}[!ht]
+\begin{figure*}[!ht]
 \centering
 \includegraphics[width=180mm]{RS}
 \caption[Responsive Stimulation]{
 (A) 2 minutes of spontaneous network activity under epileptic conditions where 2 seizures spontaneously emerged.
 (B) identical network activity in (A), but with responsive neurostimulation, whereby the optimal \len{} stimulus was delivered at the times indicated by the red lines. As can be seen, the stimulation was able to avert a prolonged seizure.}
 \label{RS}
-\end{figure}
+\end{figure*}
 
 \section{Discussion \label{disc}}
 
 In this study single neuron activity from human hippocampus was used to develop a reconstructed neuronal network (RNN) which replicates in-silico the distinctive connectivity and causal dynamics of the recorded \nn{} neurons (Fig. \ref{graph}).
-the RNN was estimated using a nonparametric/phenomenological approach based entirely on recorded data and which makes few \textit{a priori} assumptions about the biophysical nature of the network dynamics \citep{pillow08}.
+the RNN was estimated using a nonparametric/phenomenological approach based entirely on recorded data and which makes few \textit{a priori} assumptions about the biophysical nature of the network dynamics \cite{pillow08}.
 The spiking probability of each neuron was estimated using a realistic model incorporating the output neuron's past spiking history and the spiking history of all connected neurons.
 Group regularization allowed for the efficient and compact estimation of connectivity and model complexity (i.e. whether neuronal interactions are best described by a linear or nonlinear filter).
 
@@ -478,29 +428,29 @@ A central goal of future work will be to see how well the algorithm performs on 
 
 \subsection{RNN for Neurostimulation Design}
 
-After the RNN was estimated, seizure dynamics were induced by raising membrane potential and isolating the network from external noise (Fig. \ref{graph}), both features which have been implicated in initiating physiological seizures \citep{fricker99,wendling03,warren10}.
+After the RNN was estimated, seizure dynamics were induced by raising membrane potential and isolating the network from external noise (Fig. \ref{graph}), both features which have been implicated in initiating physiological seizures \cite{fricker99,wendling03,warren10}.
 Finally, a simulated annealing algorithm was used to design an optimal stimulation pattern to induce the network to leave the seizure state (Fig. \ref{SAresults}).
 The optimal stimulation was found to abate \success{}\% of seizures and was  successfully used in a responsive stimulation paradigm to prevent seizures from developing in the RNN (Fig. \ref{MC}-\ref{RS}).
 These results lead us to hypothesize that (1) the unique nature of every patient's seizure focus proscribes any single neurostimulation pattern from being optimal in every patient (2) the distinctive nature of the seizure focus can be exploited to algorithmically develop efficient patient-specific neurostimulation patterns.
 
-A conceptually similar approach has been used in a previous study where a neural mass model of the thalamocortical network estimated from patient data was used to explain why particular frequencies of stimulation were successful to abate seizures while others were not \citep{wendling13}.
-Additionally, such a customized/algorithmic approach has already begun to be applied to develop neurostimulation patterns for Parkinson's Disease (PD) \citep{holt14,grill14patent,brocker17,pena17}.
-However, in PD, one has near instantaneous feedback of the stimulation by assessing its effects on the patient's tremor \citep{grill13}.
+A conceptually similar approach has been used in a previous study where a neural mass model of the thalamocortical network estimated from patient data was used to explain why particular frequencies of stimulation were successful to abate seizures while others were not \cite{wendling13}.
+Additionally, such a customized/algorithmic approach has already begun to be applied to develop neurostimulation patterns for Parkinson's Disease (PD) \cite{holt14,grill14patent,brocker17,pena17}.
+However, in PD, one has near instantaneous feedback of the stimulation by assessing its effects on the patient's tremor \cite{grill13}.
 The challenges are much greater in epilepsy where physician must oftentimes wait several months before they can access the quality of a particular stimulation design due to the infrequency of seizures.
 Furthermore, physicians cannot "go back in time" to see how a particular seizure would have evolved had a different stimulation pattern been applied or had no stimulation been applied at all.
 This is particularly important since responsive neurostimulation aims to perturb the network in the preictal state and thus prevent the seizure from ever occurring; currently, however, devices such as the Neuropace suffer from a very high false-positive rate.
 This means that the lack of a seizure following stimulation cannot be used as indicative of its success since in most cases no seizure would have developed regardless of the stimulation pattern.
-Due to these difficulties, the Neuropace manual recommends that physicians use a 200 Hz periodic stimulus, and if it is unsuccessful to increase the current amplitude \citep{NP}.
-This is despite the fact that the device allows two leads to be independently programmed with a wide range of complex stimuli and a frequency range of 1-333 Hz \citep{sun08}.
-We believe a major bottleneck in the performance of devices such as the Neuropace, which currently reduces seizures by an impressive but far from perfect 54\% \citep{heck14}, is not the hardware, but rather the physicians inability to successfully identify optimal stimulation parameters.
+Due to these difficulties, the Neuropace manual recommends that physicians use a 200 Hz periodic stimulus, and if it is unsuccessful to increase the current amplitude \cite{NP}.
+This is despite the fact that the device allows two leads to be independently programmed with a wide range of complex stimuli and a frequency range of 1-333 Hz \cite{sun08}.
+We believe a major bottleneck in the performance of devices such as the Neuropace, which currently reduces seizures by an impressive but far from perfect 54\% \cite{heck14}, is not the hardware, but rather the physicians inability to successfully identify optimal stimulation parameters.
 
 In this study, model based in-silico neurostimulation optimization is presented as a solution to this vital issue.
 In this paradigm, a patient-specific model is used as a testbed or hypothesis engine for the design and validation of optimal neurostimulation.
 This paradigm provides solutions to many of the experimental issues of neurostimulation design: one may obtain seizures "on-demand" by initiating the network in the seizure state.
 Furthermore, by using identical sequences of random numbers, one can "go back in time" and observe how the seizure would have evolved under different applied stimuli.
 Using this testbed we gained many insights into neurostimulation and generated many testable predictions.
-It was observed that synchronized random (Poisson) stimulation provides slight benefits over periodic stimulation - an observation previously observed in the literature both experimentally and in computational models \citep{wyckhuys10,buffel14}.
-However, neither of these stimulus styles performed as well as random unsynchronized stimulation over multiple sites, suggesting the need to conduct more experiments exploiting multiple electrodes for stimulation \citep{cook13,van14}.
+It was observed that synchronized random (Poisson) stimulation provides slight benefits over periodic stimulation - an observation previously observed in the literature both experimentally and in computational models \cite{wyckhuys10,buffel14}.
+However, neither of these stimulus styles performed as well as random unsynchronized stimulation over multiple sites, suggesting the need to conduct more experiments exploiting multiple electrodes for stimulation \cite{cook13,van14}.
 Furthermore, it was observed that the optimal stimulation disproportionably targeted neurons outside of the epileptic subnetwork (i.e. focus).
 However, our most important finding was that optimized stimulation over multiple electrodes significantly outperformed any of the previously mentioned stimulus styles by exploiting the unique connectivity and dynamics of the RNN.
 Most importantly the optimal neurostimulation pattern identified here can be experimentally validated by applying it to the patient for which it was estimated on.
@@ -513,162 +463,48 @@ The network dynamics were estimated from spontaneous/observed data and predictiv
 This Granger-causality approach is biased by unobserved inputs.
 In this case, neurons within CA3 and neurons which project to CA3 (such as those from the entorhinal cortex) are potential unobserved inputs.
 Furthermore, our model of electrical stimulation, which assumes a single electrode consistently elicits a single spike in a single neuron, is overly simplistic.
-Any stimulation will affect at least dozens of surrounding cells \citep{grill05,desai14}. 
+Any stimulation will affect at least dozens of surrounding cells \cite{grill05,desai14}. 
 Both of these issues can simultaneously be overcome by experimentally perturbing the network using sequential stimulus pulses across multiple electrodes and analyzing the response.
-Efficient algorithms are already being developed for how to optimally design such experiments \citep{lepage13,kim14}
+Efficient algorithms are already being developed for how to optimally design such experiments \cite{lepage13,kim14}
 
 The current model assumes stationarity of neuronal dynamics, while in reality recorded neurons exhibit strong nonstationarities due to synaptic plasticity and electrode drift. 
 The stationarity assumption was necessary in order to define a tractable optimization problem. 
 It is unknown to what extent nonstationarities in neuronal dynamics lead to nonstationarities in optimal stimulation parameters. 
-Future work may aim to address this issue by attempting to identify optimal neurostimulation patterns in nonstationary networks such as those modeled in \citet{robinson16}.
+Future work may aim to address this issue by attempting to identify optimal neurostimulation patterns in nonstationary networks such as those modeled in \cite{robinson16}.
 
 The model presented here relied on single unit activity.
 In practice, it may be more realistic to apply the presented framework for identifying optimal stimulation to other electrophysiological signals such as ECoG.
 In this case, each of the specific steps would be modified, while the overall framework would remain the same.
 For example, in the simulated annealing algorithm the current MFR based cost function would need to be substituted for one which can be applied to continuous signals, such as one based on high frequency oscillations.
 Furthermore, due to the difficulty of recording single units during human seizures, and the difficulty of estimating reliable models from such short data records, the present work synthetically induced a seizure.
-Synthetic seizure dynamics were homogenous, while there is evidence that actual seizures exhibit diversity even within the same patient \citep{bower12,he14}. 
+Synthetic seizure dynamics were homogenous, while there is evidence that actual seizures exhibit diversity even within the same patient \cite{bower12,he14}. 
 In future work, estimating network dynamics directly from recorded seizure data will lead to more conclusive results as less assumptions about seizure initiation will need to be made.
 Most importantly, there is a need to validate the obtained results experimentally.
 We imagine that the advocated framework will need to go through several iterations of experimental refinement until the strong computational results achieved here can be matched in actual animal models or human patients.
 
 From a computational perspective, several improvements can be made to the stimulation design and control algorithm.
-While the simulated annealing algorithm considered a very large space of stimulation possibilities ($2^{176}$ total), several stimulation patterns were not considered such as those which intermixed periodic and random pulse trains and completely arbitrary pulse trains \citep{grill14patent2,brocker17}.
+While the simulated annealing algorithm considered a very large space of stimulation possibilities ($2^{176}$ total), several stimulation patterns were not considered such as those which intermixed periodic and random pulse trains and completely arbitrary pulse trains \cite{grill14patent2,brocker17}.
 Furthermore, results may potentially be improved by incorporating the relative phases between different pulse trains into the algorithm.
 Also, a relatively simple control strategy based on the Neuropace device was employed.
 The advantage of this strategy was that the stimulation was independent of the seizure specifics.
 %%multi seizure stuff
-In the future more sophisticated control algorithms may be employed which emit different stimulation patterns based on the quality and progression of the specific seizure \citep{ching12,zalay13,kalitzin14,ehrens15}.
+In the future more sophisticated control algorithms may be employed which emit different stimulation patterns based on the quality and progression of the specific seizure \cite{ching12,zalay13,kalitzin14,ehrens15}.
 Overall, while many improvements can be made in the specifics, we believe that the overall framework presented here has the potential to significantly increase the effectiveness of neurostimulation for epilepsy.
 
 \subsection{Vision}
 
-Our speculative and perhaps overly optimistic vision is that in the future epileptic patients will be implanted with stimulation devices consisting of multiple electrodes which are capable of both recording and stimulating \citep{ryapolova14} and can be independently programmed.
+Our speculative and perhaps overly optimistic vision is that in the future epileptic patients will be implanted with stimulation devices consisting of multiple electrodes which are capable of both recording and stimulating \cite{ryapolova14} and can be independently programmed.
 Upon implantation, an automatic stimulation algorithm will perturb the network to establish safe current levels and to map effective connectivity between the observed areas.
 Machine learning algorithms will then program the initial stimulation parameters.
-As is currently done in the Neuropace \citep{NP}, the device will automatically record all detected epileptic activity and this data will be uploaded daily to a computer.
+As is currently done in the Neuropace \cite{NP}, the device will automatically record all detected epileptic activity and this data will be uploaded daily to a computer.
 Then, this data and patient input will be used offline to analyze the success of yesterday's stimulation.
-Finally, a reinforcement learning paradigm \citep{gosavi14}, will be used to adjust parameters for the next day.
+Finally, a reinforcement learning paradigm \cite{gosavi14}, will be used to adjust parameters for the next day.
 While admittedly, such a task may seem incredibly difficult to realize we believe that the growth of machine learning in the last decade has made this more realistic to accomplish than ever before.
 Furthermore, since this approach is fundamentally an algorithmic one and does not heavily rely on specific electrode design and placement, it may be backwards compatible with current generation devices and significantly improve their efficacy.  
 
 
- \renewcommand{\theequation}{A\arabic{equation}}    
-% redefine the command that creates the equation no.    
-\setcounter{equation}{0}  % reset counter     
-\section*{Appendix: Dynamic Connectivity Model and Estimation}
 
-\subsubsection{Model Structure \label{MtC}}
-A probabilistic model was used to predict the firing probability of a given output CA3 neuron based on its own spiking history and the past and present spiking activity of all other functionally connected CA3 neurons.
-Thus the probability that a particular neuron, $y(t)$ will fire at discrete timebin $t$ is expressed by the probability, $\hat{y}(t)$:
-\begin{equation}
-\hat{y}(t)=Pr\Big(y(t)=1|x_1(t-\tau)...x_{N}(t-\tau),y(t-1-\tau)\Big)=H\Big[x_1(t-\tau)...x_{N}(t-\tau),y(t-1-\tau)\Big]
-\label{eq:prob}
-\end{equation}
-where $\{x_n(t)\}$ reflect the $N$ effectively connected spiketrains from CA3, $\tau$ reflects the finite memory of the system which ranges from $0 \leq \tau \leq M$, and $H[]$ reflects the mathematical model which is used to describe the dynamical transformation from $\{x_n(t)\}\to y(t)$.
-The generalized linear modeling (GLM) framework was used whereby $H[]$ was decomposed into a linearized function of the inputs, $\eta(t)$, followed by a static nonlinearity, here chosen to be the probit link function \citep{truccolo05,song07}:
-\begin{equation}
-\hat{y}(t)=\Phi\Big(\eta(t),\sigma\Big)=\frac{1}{\sqrt{2\pi\sigma^2}}\int_{-\infty}^xe^{-\frac{1}{2}(\frac{\eta(t)}{\sigma})^2}
-\label{eq:GLM}
-\end{equation}
-$\eta(t)$, the linearized component of the GLM, takes the form of a nonparametric multiple-input autoregressive model which describes the dynamical transformation between input and output spike trains.
-It consists of a feedforward component, reflecting the effect of the $N$ input cells on the output cell, and a feedback/autoregressive component reflecting how the cell's past spiking history affects its current probability of spiking. Thus, the output is calculated as:
-\begin{equation}
-\eta(t)=\underbrace{k_0}_\text{baseline}+\underbrace{\sum_{n=1}^{N}F[x_n(t),k_n]}_\text{interneuronal}+
-\underbrace{F[y(t),k_{AR}]}_\text{feedback}
-\label{eq:MVAR}
-\end{equation}
-where $F[x_n(t),k_n]$ models the feedforward effects of input $x_n(t)$, $F[y(t),k_{AR}]$ models feedback effects, and $k_0$, the constant offset term, models the baseline firing probability.
+\bibliographystyle{IEEEtran}  
+\bibliography{biblio}
 
-In past studies, feedforward effects were fixed to be either linear \citep{sandler14} or nonlinear \citep{sandler15,song07}, and feedback effects were fixed to be linear \citep{song07}.
-In this study, using the sparse group selection algorithm (see section \ref{MtE}), it is possible to determine whether particular inputs and feedback effects are best modeled by either a linear or nonlinear kernel (see Fig. \ref{graph}d).
-In this study, linear refers to convolution with a linear filter, $k^{(1)}(\tau)$, while nonlinear refers to convolution with a quadratic (2nd order Volterra) filter, $k^{(2)}(\tau_1,\tau_2)$ \citep{marm04,rajan13}.
-Mathematically, these operations are respectively defined by Eq.\ref{eq:FF}a,b:
-
-\begin{subequations}
-	\begin{align}
-	F[x(t),k^{(1)}(\tau)]=\sum_{\tau=0}^{M}k^{(1)}(\tau)x(t-\tau)\\
-	F[x(t),k^{(2)}(\tau_1,\tau_2)]=\sum_{\tau_1=1}^M\sum_{\tau_2=1}^Mk^{(2)}(\tau_1,\tau_2)x(t-\tau_1)x(t-\tau_2)
-	\end{align}
-	\label{eq:FF}
-\end{subequations}
-
-It was found that a memory of 100 ms was sufficient to model the dynamical effects of most neurons, and thus $M$ was fixed to 50 (100 ms/2 ms binwidth).
-In order to reduce the amount of model parameters and thereby increase parameter stability, we applied the Laguerre expansion technique (LET) to expand the feedforward and feedback filters over $L$ Laguerre basis functions \citep{marm04}.
-Based on previous studies, $L=6$ Laguerre basis functions were used \citep{sandler15clpp,song07,song09}.
-Correspondingly, the amount of parameters in linear kernels was reduced from $M$ to $L$ (savings of 44 parameters) and in 2nd order kernels from to $M(M+1)/2$ to $L(L+1)/2$ (savings of 1254 parameters).
-The Laguerre parameter $\alpha$ was fixed at 0.542 to reflect this system memory \citep{marm04}.
-
-
-\subsubsection{Model Estimation \label{MtE}}
-Presumably, only a small portion of the total recorded neurons, $R$, causally influence any given neuron in the reconstructed neuronal network (RNN).
-This motivates the central task of identifying which neurons are effectively connected and which are not \citep{sporns09,fallani14}.
-Most methods which aim to estimate effective connectivity adopt a Granger causality approach whereby neuron A is effectively connected to neuron B only if it can help predict when neuron B will spike \citep{shoham10,brown11,sandler14,zhou14}.
-Here a penalized group regression approach was adopted which implicitly maximizes predictive power while improving computational efficiency over commonly used stepwise input selection methods \citep{song13sparse,song16sparse}.
-
-To proceed with penalized group regression, Eq. \ref{eq:GLM} is first recast in matrix form:
-\begin{equation}
-\bm{\hat{y}}=\Phi(\bm{\eta})=\Phi(\bm{Vc})
-\label{eq:mat}
-\end{equation}
-where $\bm{\hat{y}}$ and $\bm{\eta}$ are the vectors consisting of $\hat{y}(t)$ and $\eta(t)$ for $1\leq t \leq T$, $\bm{V}$ is the design matrix consisting of the convolved inputs and, for quadratic kernels, their cross products \citep{marm04}, and  $\bm{c}$ is the vector of model parameters to be estimated.
-In the \nn{} neuron RNN, there are 300,000 observations and 649 unknown parameters.
-% 1+N*(L+L(L+1)/2)
-
-The input parameters are divided into $2R$ groups consisting of 2 groups for every putative input: one group for the $L$ 1st order kernel parameters and another for the $L(L+1)/2$ 2nd order kernel parameters.
-Thus, for the $R=24$ recorded neurons, there were 48 groups: 24 1st order kernel groups and 24 2nd order kernel groups. 
-The objective is now to find the optimal parameter vector, $\bm{c}^*$ which minimizes the cost function composed of the sum of the negative log-loss likelihood and the group regularization term, $P(\bm{c})$:
-\begin{equation}
-C(\bm{c};\bm{y},\bm{V})=\sum_{t=1}^T\Big(y(t)log\hat{y}(t)+(1-y(t))log(1-\hat{y}(t))\Big)+\sum_{g=1}^{2R}P(\bm{c_g})
-\label{eq:cost}
-\end{equation}
-where $\bm{c_g}$ is the group parameter vector containing only the parameters within group $g$.
-The function of the regularization term is to automatically set to 0 any parameter groups which are not found to significantly influence the output - thus implicitly estimating sparse functional connectivity.
-Here, the group minimax concave penalty (MCP) regularizer was chosen over the more conventional group LASSO because (1) it induces much less regularization based parameter shrinkages (biases) than the latter (2) it leads to much sparser solutions than the latter \citep{breheny15,zhang10}.
-The MCP regularizer is defined as:
-\begin{equation}
-P(\bm{c_g};\lambda,\gamma) =
-\begin{cases}
-\lambda\|\bm{c_g}\|-\frac{\|\bm{c_g}\|^2}{2\gamma}  & \|\bm{c_g}\| \leq \gamma\lambda \\
-\frac{1}{2}\gamma\lambda^2                          & \|\bm{c_g}\| >    \gamma\lambda
-\end{cases}
-\end{equation}
-where $\lambda$ determines the strength of regularization and $\gamma$, which was fixed at 3, determines the range over which MCP regularization is applied \citep{breheny15}.
-The group coordinate descent algorithm outlined in \citet{breheny15} was used to find $\bm{c}^*$.
-
-The optimal $\lambda$ value was selected using a warm-start regularization path approach using 90 logarithmically spaced $\lambda$ values.
-At each iteration, the Pearson correlation, $\rho$ was computed between the recorded spiketrain, $y(t)$, and the estimated spike probabilities, $\hat{y}(t)$, on a testing set consisting of 20\% of data randomly selected from $\bm{V}$.
-$\rho$ was used since (1) it was previously found to be a robust metric of similarity between spiketrains and continuous signals \citep{sandler14} and (2) it led to sparser solutions than the more commonly used cross-entropy error.
-Finally, the optimal $\lambda$ was selected as the largest $\lambda$ which achieved $>99\%$ of the max $\rho$ value.
-The regularization path can be seen in Fig. \ref{regpath}.
-
-Since any regularization will necessarily bias obtained parameters to varying degrees, all parameters of nonsparse groups were reestimated without sparse groups and without the regularization term.
-Note that due to computational efficiency and simplicity the initial search for $\lambda$ uses a logit link function \citep{breheny15}, while the final reestimation was done using the probit link of Eq. \ref{eq:GLM}.
-All computations were done in Matlab using custom code available upon request.
-A standard 3.2Ghz, 6-core desktop computer was able to estimate the \nn{}-neuron RNN in approximately 3 hours.
-
-\subsubsection{Model Validation \label{MtV}}
-To avoid overfitting, Monte Carlo style simulations were used to select those models which represent significant causal connections between input and output neurons and do not just fit noise \citep{sandler14}.
-The following procedure was used: in each run the real input was divided into 40 blocks and these blocks were randomly permuted with respect to the output.
-A model was then generated between the permuted inputs and the real output, and the Pearson correlation coefficient, $\rho_{i}$, was obtained as a metric of performance.
-$T=40$ such simulations were conducted for each output and a set of performance metrics, $\{\rho_{i}\}_{i}^{T}$, was obtained.
-Then, using Fisher's transformation, we tested the hypothesis, $H_{0}$, that $\rho$ was within the population of $\{\rho_{i}\}$.
-If this hypothesis could be rejected at the 99.99\% significance level, the model was deemed significant.
-The very conservative threshold ($P<.0001$) was used due to the large amount of comparisons being made.
-
-Two metrics were used to evaluate the goodness-of-fit of the estimated models by comparing the estimated continuous output, $\hat{y}(t)$ with the true binary output $y(t)$.
-Receiver Operator characteristic (ROC) curves plot the true positive rate against the false positive rate over the putative range of threshold values for the continuous output, $y(t)$ (Fig. \ref{regpath}c, \citet{zanos08}).
-The second metric used was the discrete KS test \citep{haslinger10,song13sparse} which compares the ISI distribution of the time rescaled probabilistic estimates with that of a homogenous Poisson process (Fig. \ref{regpath}d).
-All model assessment metrics were evaluated on the testing set.
-
-
-
-\section*{Acknowledgements}
-This work was supported by NIH grant P41-EB001978 to the Biomedical Simulations Resource at the University of Southern California and DARPA contracts N6601-14-C-4016 and N66601-09-C-2081.  The authors thank Dr. Daniel E. Couture, and Dr. Gautam Popli, Wake Forest Baptist Medical Center for their contribution of human hippocampal neural recordings.
-
-%\bibliographystyle{plainnat} %
-%\bibliography{biblio,net}
-
-\printbibliography[heading=bibintoc]
-
-\end{document} 
+\end{document}
