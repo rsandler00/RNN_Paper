@@ -50,7 +50,7 @@
 \renewcommand{\abstracttextfont}{\normalfont\small\itshape} %Set the abstract itself to small italic text
 
 \title{\vspace{-30mm}\fontsize{14pt}{1pt}\textbf{
-Designing Patient-Specific Optimal Neurostimulation Patterns for Seizure Suppression Using Human Hippocampal Data}} % Article title
+Designing Patient-Specific Optimal Neurostimulation Patterns for Seizure Suppression}} % Article title
 
 \author[1,2]{Roman A. Sandler     \thanks{Corresponding Author: rsandler00@gmail.com}}
 \author[3]{Kunling Geng         }   %   kgeng@usc.edu
@@ -88,25 +88,19 @@ Designing Patient-Specific Optimal Neurostimulation Patterns for Seizure Suppres
 \begin{abstract}
 Neurostimulation is a promising therapy for abating epileptic seizures.
 However, it is extremely difficult to identify optimal stimulation patterns experimentally.
-In this study we use nonlinear statistical modeling to reconstruct the unique connectivity and interneuronal dynamics of \nn{} neurons recorded from a human hippocampus.
-Spontaneous seizure-like activity is induced \textit{in-silico} in the reconstructed neuronal network.
-This network is then used as a testbed to design and validate a wide range of neurostimulation patterns.
-It was found that the commonly used synchronized periodic trains were not able to permanently abate seizures at any frequency.
+%In this study we use nonlinear statistical modeling to reconstruct the unique connectivity and dynamics of \nn{} neurons recorded from human hippocampus.
+In this study human recordings are used to develop a functional \nn{} neuron network statistical model of hippocampal connectivity and dynamics. 
+Spontaneous seizure-like activity is induced \textit{in-silico} in this reconstructed neuronal network.
+The network is then used as a testbed to design and validate a wide range of neurostimulation patterns.
+Commonly used periodic trains were not able to permanently abate seizures at any frequency.
 A simulated annealing global optimization algorithm was then used to identify an optimal stimulation pattern which successfully abated \success{}\% of seizures.
 Finally, in a fully responsive, or "closed-loop" neurostimulation paradigm, the optimal stimulation successfully prevented the network from entering the seizure state.
 We propose that the framework presented here for algorithmically identifying patient-specific neurostimulation patterns can greatly increase the efficacy of neurostimulation devices for seizures.
 \end{abstract}
 
+\section*{Publication Statement}
+None of this material has been published elsewhere
 
-\section*{Significance Statement}
-Responsive Neurostimulation devices are quickly becoming a popular method for treating intractable epilepsy.
-Nonetheless, such devices have a large nonresponder rate and only diminish seizure rate rather than completely abolish them.
-A major technological limitation of these devices is that due to the huge parameter space and lack of immediate feedback, it is extremely difficult to identify optimal stimulation parameters such as stimulus pattern and frequency.
-The following work uses recorded human hippocampal data to develop an in-silico testbed for identifying these parameters in a patient specific manner.
-The presented machine learning algorithms used for model estimation and stimulation design are both original and innovative. 
-Implementing such algorithms in responsive neurostimulation devices may greatly increase their efficacy and thus these results constitute a significant advance in the design of neurostimulation to abate seizures.
-Furthermore, the nature of the estimated epileptic network and the obtained optimal neurostimulation patterns presents much insight into the workings of seizure initiation and spread. 
-The considerations make this research ideally suited for publication in PLOS Computational Biology. 
 
 
 
